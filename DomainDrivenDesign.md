@@ -60,4 +60,4 @@ Das Lager enthält alle Zutaten jeder Art in den vorhandenen Mengen
 - Zutaten mit zugehörigen Mengenangaben
 
 #### Regeln
-- Die zugehörigen Mengenangaben jeder Zutat dürfen nicht unter null senken
+- Die zugehörigen Mengenangaben jeder Zutat dürfen nicht unter null sinken
