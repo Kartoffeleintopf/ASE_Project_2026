@@ -1,6 +1,11 @@
 package com.example.ase_project_2026;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Ingredient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
 
@@ -8,7 +13,7 @@ public class Ingredient {
     // research how to save pictures in Java
     // alternatively could represent url --> pictureLink
     private int amount = 0;
-    private boolean base;
+    private Boolean base;
 
     protected Ingredient() {}
 
@@ -46,7 +51,7 @@ public class Ingredient {
         this.amount = amount;
     }
 
-    public boolean isBase() {
+    public Boolean isBase() {
         return base;
     }
 }
