@@ -61,3 +61,7 @@ Das Lager enthält alle Zutaten jeder Art in den vorhandenen Mengen
 
 #### Regeln
 - Die zugehörigen Mengenangaben jeder Zutat dürfen nicht unter null sinken
+
+### Entscheidung ob vererbung
+Soll Ingredient eine Superklasse sein die an BaseIngredient und an RecipeIngredient vererbt.
+Nein
