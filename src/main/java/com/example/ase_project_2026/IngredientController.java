@@ -16,4 +16,13 @@ public class IngredientController {
     public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
         return repository.save(ingredient);
     }
+
+    // ToDO
+    /*
+    Zutaten bearbeiten oder loeschen
+
+    Rezept produzieren (maybe need another controller for that?!
+
+    Lagerbestand einsehen Neues rezept erstellen
+     */
 }

@@ -14,6 +14,7 @@ public class Ingredient {
     // alternatively could represent url --> pictureLink
     private int amount = 0;
     private Boolean base;
+    //private Recipe recipe; //this only applies in non base Ingredients...
 
     protected Ingredient() {}
 
