@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long id;// should be saved as foreign key in lager for example or reicpe
     private String name;
 
     private String picture; // This will need to be changed to another type
