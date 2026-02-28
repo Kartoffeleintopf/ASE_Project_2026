@@ -17,6 +17,16 @@ public class IngredientController {
         return repository.save(ingredient);
     }
 
+    @GetMapping("/{ingredientID}")
+    public Ingredient getIngredientByID(@PathVariable long ingredientID) {
+        return repository.findById(ingredientID).orElse(null);
+    }
+
+    @GetMapping("/name/{ingredientID}")
+    public String getIngredientNameByID(@PathVariable long ingredientID) {
+        return repository.findById(ingredientID).orElse(null).getName();
+    }
+
     // ToDO
     /*
     Zutaten bearbeiten oder loeschen
