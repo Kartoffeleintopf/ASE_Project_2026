@@ -2,6 +2,8 @@ package com.example.ase_project_2026;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
@@ -24,7 +26,7 @@ public class IngredientController {
 
     @GetMapping("/name/{ingredientID}")
     public String getIngredientNameByID(@PathVariable long ingredientID) {
-        return repository.findById(ingredientID).orElse(null).getName();
+        return Objects.requireNonNull(repository.findById(ingredientID).orElse(null)).getName();
     }
 
     // ToDO
