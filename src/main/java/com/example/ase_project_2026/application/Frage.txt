@@ -1,3 +1,5 @@
 Kommen hier die Controller hin?
 
 Folien bitte noch hochladen.
+
+Primitives in Domain Klasse oder nicht? (für jpa)
