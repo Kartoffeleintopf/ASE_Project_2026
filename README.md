@@ -26,19 +26,20 @@ Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produkti
 
 ### Empfehlungen für die Umsetzung:
 - Fachlichen Regeln/Invarianten vor Beginn der Implementierung  klar zu definieren
-- - Bestände dürfen nicht negativ werden (Produktion nur, wenn ausreichend vorhanden ist).
-- - „Produzierbar“-Zutat braucht genau ein Rezept; Grundzutaten haben kein Rezept.
-- - Abhängigkeiten beim Löschen/Ändern: Ein Rezept/Zutat darf nicht entfernt werden, wenn es noch referenziert wird (oder du definierst eine klare Migrationsregel).
-- - Produktionsketten: Keine Zyklen (ein Produkt darf nicht indirekt wieder zu sich selbst führen), sonst gibt es Endlosschleifen.
+  - Bestände dürfen nicht negativ werden (Produktion nur, wenn ausreichend vorhanden ist).
+  - „Produzierbar“-Zutat braucht genau ein Rezept; Grundzutaten haben kein Rezept.
+  - Abhängigkeiten beim Löschen/Ändern: Ein Rezept/Zutat darf nicht entfernt werden, wenn es noch referenziert wird (oder du definierst eine klare Migrationsregel).
+  - Produktionsketten: Keine Zyklen (ein Produkt darf nicht indirekt wieder zu sich selbst führen), sonst gibt es Endlosschleifen.
 
 ### Konkretisierung nötig
 - „Rezept produzieren“ ist der fachliche Kern
-- - Wird immer genau 1 Einheit produziert oder eine frei wählbare Menge?
-- - Was passiert bei Teilmengen / Rundungen?
+  - Wird immer genau 1 Einheit produziert oder eine frei wählbare Menge?
+  - Was passiert bei Teilmengen / Rundungen?
 
 - Transaktionslogik: Zutaten-Abzug und Ergebnis-Zugang sollten atomar sein (alles oder nichts).
 
 - Das Bild-Attribut ist ok, aber ich würde Dir empfehlen, es eher schlank zu halten (z. B. URL/Dateipfad), damit der Fokus auf der Domänenlogik bleibt.
+--> Bild wird dummy Bildlink enthalten
 
 - Bitte lege die Datenbank zeitnah fest (z. B. PostgreSQL oder SQLite). „tbd“ ist nicht schlimm, aber du solltest früh eine Entscheidung treffen, um Modellierung und Persistenz konsistent umzusetzen.
 --> MariaDB, JPA
