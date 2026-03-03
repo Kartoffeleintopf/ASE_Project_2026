@@ -1,6 +1,6 @@
 # Advanced Software Engineering Project 2026
 
-# Lager und Rezeptverwaltung
+## Lager und Rezeptverwaltung
 Die Anwendung dient der Lager- und Rezepturverwaltung. Nutzer können Zutaten sowie Rezepte
 erstellen, bearbeiten und löschen. Rezepte bestehen aus einer oder mehreren Zutaten, welche
 jeweils in einer bestimmten Menge benötigt werden.
@@ -20,18 +20,18 @@ Zutaten, die nicht das Ergebnis eines Rezepts sind, werden als Grundzutaten beze
 Erstellung einer Zutat kann festgelegt werden, ob es sich um eine Grundzutat oder um ein durch ein
 Rezept herstellbares Produkt handelt.
 
-# Feedback
+## Feedback
 Das Thema hat die Freigabe erhalten!
 Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produktionsketten bietet sehr viel fachliche Tiefe und eignet sich hervorragend für DDD, Clean Architecture sowie Tests und Entwurfsmuster.
 
-## Empfehlungen für die Umsetzung:
+### Empfehlungen für die Umsetzung:
 - Fachlichen Regeln/Invarianten vor Beginn der Implementierung  klar zu definieren
 - - Bestände dürfen nicht negativ werden (Produktion nur, wenn ausreichend vorhanden ist).
 - - „Produzierbar“-Zutat braucht genau ein Rezept; Grundzutaten haben kein Rezept.
 - - Abhängigkeiten beim Löschen/Ändern: Ein Rezept/Zutat darf nicht entfernt werden, wenn es noch referenziert wird (oder du definierst eine klare Migrationsregel).
 - - Produktionsketten: Keine Zyklen (ein Produkt darf nicht indirekt wieder zu sich selbst führen), sonst gibt es Endlosschleifen.
 
-## Konkretisierung nötig
+### Konkretisierung nötig
 - „Rezept produzieren“ ist der fachliche Kern
 - - Wird immer genau 1 Einheit produziert oder eine frei wählbare Menge?
 - - Was passiert bei Teilmengen / Rundungen?
@@ -42,13 +42,32 @@ Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produkti
 
 - Bitte lege die Datenbank zeitnah fest (z. B. PostgreSQL oder SQLite). „tbd“ ist nicht schlimm, aber du solltest früh eine Entscheidung treffen, um Modellierung und Persistenz konsistent umzusetzen.
 --> MariaDB, JPA
-# ToDO
+
+## ToDO
 - Unit Tests
 - the entire logic
 - everything really
 
-# temporary Documentation
-- run the project using Maven by entering "./mvnw spring-boot:run" in the base folder
+## temporary Documentation
+- run the project using Maven by typing the below command while located in the base folder
+```
+./mvnw spring-boot:run
+```
 
-# MariaDB Setup
-document setup of the mariadb...
+## MariaDB Setup
+Enthält die Schritte die getätigt wurden um die Datenbank einzurichten
+### MariaDB als root User starten
+```
+sudo mariadb -u root
+```
+### Datenbank anlegen
+```
+Create DATABASE ase_db
+```
+### Nutzer für die Datenbank anlegen
+```
+CREATE USER 'allpowerful'@'localhost' IDENTIFIED BY '';
+GRANT ALL PRIVILEGES ON ase_db.* TO 'allpowerful'@'localhost';
+FLUSH PRIVILEGES;
+```
+### Nutzerdetails in application.properties eintragen
