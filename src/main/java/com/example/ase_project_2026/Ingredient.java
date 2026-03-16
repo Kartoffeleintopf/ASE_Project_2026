@@ -8,12 +8,16 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private long id;// should be saved as foreign key in lager for example or recipe
+
     @Column
     private String name;
+
     @Column
     private String picture; // represents pictureLink
+
     @Column
     private Boolean base;
+
     @Column
     //@ForeignKey
     private long recipeID; //this only applies in non base Ingredients
