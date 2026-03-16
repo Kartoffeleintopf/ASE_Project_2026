@@ -6,15 +6,17 @@ import jakarta.persistence.*;
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;// should be saved as foreign key in lager for example or reicpe
+    @Column
+    private long id;// should be saved as foreign key in lager for example or recipe
+    @Column
     private String name;
-
-    private String picture; // This will need to be changed to another type
-    // research how to save pictures in Java
-    // alternatively could represent url --> pictureLink
-    private int amount = 0;
+    @Column
+    private String picture; // represents pictureLink
+    @Column
     private Boolean base;
-    //private Recipe recipe; //this only applies in non base Ingredients...
+    @Column
+    //@ForeignKey
+    private long recipeID; //this only applies in non base Ingredients
 
     protected Ingredient() {}
 
@@ -44,15 +46,14 @@ public class Ingredient {
         this.picture = picture;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public Boolean isBase() {
         return base;
+    }
+
+    public void setRecipeID(long recipeID) {
+        this.recipeID = recipeID;
+    }
+    public long getRecipeID() {
+        return recipeID;
     }
 }
