@@ -18,10 +18,6 @@ public class Ingredient {
     @Column
     private Boolean base;
 
-    @Column
-    //@ForeignKey
-    private long recipeID; //this only applies in non base Ingredients
-
     protected Ingredient() {}
 
     public Ingredient(String name, String picture, boolean base) {
@@ -52,12 +48,5 @@ public class Ingredient {
 
     public Boolean isBase() {
         return base;
-    }
-
-    public void setRecipeID(long recipeID) {
-        this.recipeID = recipeID;
-    }
-    public long getRecipeID() {
-        return recipeID;
     }
 }
