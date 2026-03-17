@@ -25,7 +25,7 @@ Das Thema hat die Freigabe erhalten!
 Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produktionsketten bietet sehr viel fachliche Tiefe und eignet sich hervorragend für DDD, Clean Architecture sowie Tests und Entwurfsmuster.
 
 ### Empfehlungen für die Umsetzung:
-- Fachlichen Regeln/Invarianten vor Beginn der Implementierung  klar zu definieren
+- Fachlichen Regeln/Invarianten vor Beginn der Implementierung klar zu definieren
   - Bestände dürfen nicht negativ werden (Produktion nur, wenn ausreichend vorhanden ist).
   - „Produzierbar“-Zutat braucht genau ein Rezept; Grundzutaten haben kein Rezept.
   - Abhängigkeiten beim Löschen/Ändern: Ein Rezept/Zutat darf nicht entfernt werden, wenn es noch referenziert wird (oder du definierst eine klare Migrationsregel).
@@ -54,6 +54,7 @@ Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produkti
 ```
 ./mvnw spring-boot:run
 ```
+due to the refactor work currently going on this doesn't work
 
 ## MariaDB Setup
 Enthält die Schritte die getätigt wurden um die Datenbank einzurichten
