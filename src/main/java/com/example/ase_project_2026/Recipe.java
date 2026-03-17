@@ -1,25 +1,20 @@
 package com.example.ase_project_2026;
-/*
+
 import jakarta.persistence.*;
 
 @Entity
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private long id;
+
+    @Column
     private String name;
-    // how to put ingredients in here with their associated amount?
-    // probably via ids
-    //should this even be a datatype??
+
+    //Ingredient save ith amounts
+
     protected Recipe() {}
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -29,4 +24,3 @@ public class Recipe {
         this.name = name;
     }
 }
-*/
