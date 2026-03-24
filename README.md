@@ -54,7 +54,7 @@ Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produkti
 ```
 ./mvnw spring-boot:run
 ```
-due to the refactor work currently going on this doesn't work
+due to the refactor work currently going on this doesn't work anymore
 
 ## MariaDB Setup
 Enthält die Schritte die getätigt wurden um die Datenbank einzurichten
