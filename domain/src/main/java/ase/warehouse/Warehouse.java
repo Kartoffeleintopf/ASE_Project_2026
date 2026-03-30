@@ -27,7 +27,11 @@ public class Warehouse {
 
     public int getAmount() { return amount; }
 
-    public void setAmount(int amount) { this.amount = amount; }
+    public void setAmount(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Stored amount cannot be negative!");
+        }
+        this.amount = amount; }
 
     public void addAmount(int amount) { this.amount += amount; }
 
