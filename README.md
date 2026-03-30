@@ -50,9 +50,9 @@ Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produkti
 - everything really
 
 ## temporary Documentation
-- run the project using Maven by typing the below command while located in the base folder
+- run the project using the run.sh script, if the process to run the programm should change, how its run doesn't abstracted away via the script
 ```
-./mvnw spring-boot:run
+./run.sh
 ```
 due to the refactor work currently going on this doesn't work anymore
 
