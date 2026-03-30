@@ -1,5 +1,6 @@
 package ase.ingredient;
 
+import ase.recipe.Recipe;
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +25,9 @@ public class Ingredient {
         this.name = name;
         this.picture = picture;
         this.base = base;
+        if (base) {
+            recipe = null;
+        }
     }
 
     public long getId() {
@@ -49,6 +53,13 @@ public class Ingredient {
     public Boolean isBase() {
         return base;
     }
+
+    public Recipe getRecipe() { return recipe; }
+
+    public void setRecipe(Recipe recipe) { this.recipe = recipe; }
+
+    @OneToOne(mappedBy = "produce")
+    private Recipe recipe;
 
     @Override
     public boolean equals(Object o) {
