@@ -1,14 +1,39 @@
 package ase.warehouse;
 
+import ase.ingredient.Ingredient;
+import jakarta.persistence.*;
+
+@Entity
 public class Warehouse {
-    //Foreign key of ingredient
-    //amount in warehouse
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    /*
-    ToDo
-    highlight the key where mariab db treiber is mentioned as a point for clean archtiecute that the specific sql database doesnt matter
+    @OneToOne
+    @JoinColumn(name = "ingredient_id")
+    private Ingredient ingredient;
 
-    Was sind value Objects
+    @Column
+    private int amount;
 
-     */
+    protected Warehouse() {}
+
+    public Warehouse(Ingredient ingredient) {
+        this.ingredient = ingredient;
+        this.amount = 0;
+    }
+
+    public Ingredient getIngredient() { return ingredient; }
+
+    public int getAmount() { return amount; }
+
+    public void setAmount(int amount) { this.amount = amount; }
+
+    public void addAmount(int amount) { this.amount += amount; }
+
+    public void subtractAmount(int amount) {
+        if (this.amount - amount < 0) {
+            throw new IllegalArgumentException("Stored amount cannot be negative!");
+        }
+    this.amount -= amount;}
 }
