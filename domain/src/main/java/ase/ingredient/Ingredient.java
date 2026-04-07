@@ -19,6 +19,9 @@ public class Ingredient {
     @Column
     private Boolean base;
 
+    @OneToOne(mappedBy = "produce")
+    private Recipe recipe;
+
     protected Ingredient() {}
 
     public Ingredient(String name, String picture, boolean base) {
@@ -57,9 +60,6 @@ public class Ingredient {
     public Recipe getRecipe() { return recipe; }
 
     public void setRecipe(Recipe recipe) { this.recipe = recipe; }
-
-    @OneToOne(mappedBy = "produce")
-    private Recipe recipe;
 
     @Override
     public boolean equals(Object o) {
