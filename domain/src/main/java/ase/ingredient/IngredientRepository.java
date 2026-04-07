@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     List<Ingredient> findByBase(boolean base);
-    Optional<Ingredient> findByName(String name);
+    Optional<Ingredient> findByNameContaining(String name);
 }
