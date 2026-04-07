@@ -36,6 +36,17 @@ public class IngredientApplicationService {
     public void deleteIngredient(long id) {
         // ToDo
         // Careful of interdependencies
+        // Options
+        /*
+        1. doesn't exist
+        2. exists but is produced by a recipe
+        3. exists but is used in a recipe
+        4. exists with no interdependencies
+         */
+        Ingredient ingredient =  ingredientRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+
+        //ingredientRepository.delete(ingredient);
     }
 
     public List<Ingredient> findAllIngredients() {
