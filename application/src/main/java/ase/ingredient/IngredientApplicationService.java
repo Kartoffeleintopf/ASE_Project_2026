@@ -2,6 +2,7 @@ package ase.ingredient;
 
 import ase.warehouse.WarehouseEntry;
 import ase.warehouse.WarehouseEntryRepository;
+import ase.recipe.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,14 @@ import java.util.List;
 public class IngredientApplicationService {
     private final IngredientRepository ingredientRepository;
     private final WarehouseEntryRepository warehouseEntryRepository;
+    private final RecipeRepository recipeRepository;
 
     @Autowired
     public IngredientApplicationService(IngredientRepository ingredientRepository,
-                                        WarehouseEntryRepository warehouseEntryRepository) {
+                                        WarehouseEntryRepository warehouseEntryRepository, RecipeRepository recipeRepository) {
         this.ingredientRepository = ingredientRepository;
         this.warehouseEntryRepository = warehouseEntryRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     public Ingredient createIngredient(String name, String picture, boolean base) {
@@ -45,8 +48,14 @@ public class IngredientApplicationService {
          */
         Ingredient ingredient =  ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
-
-        //ingredientRepository.delete(ingredient);
+        if (!(ingredient.isBase()) && ingredient.getRecipe() != null) {
+            throw new IllegalArgumentException("Cannot delete ingredient produced by a recipe");
+        }
+        if (false /* check if ingredient is used in a recipe */) {
+            throw new IllegalStateException("Cannot delete ingredient that is used in a recipe");
+        }
+        warehouseEntryRepository.deleteByIngredient(ingredient);
+        ingredientRepository.delete(ingredient);
     }
 
     public List<Ingredient> findAllIngredients() {
