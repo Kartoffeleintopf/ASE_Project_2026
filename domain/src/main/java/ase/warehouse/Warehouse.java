@@ -2,7 +2,7 @@ package ase.warehouse;
 
 import ase.ingredient.Ingredient;
 import jakarta.persistence.*;
-
+/*
 @Entity
 public class Warehouse {
     @Id
@@ -41,3 +41,4 @@ public class Warehouse {
         setAmount(getAmount() - amount);
     }
 }
+*/
