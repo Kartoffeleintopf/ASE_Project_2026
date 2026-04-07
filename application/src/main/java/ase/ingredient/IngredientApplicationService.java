@@ -46,6 +46,15 @@ public class IngredientApplicationService {
         3. exists but is used in a recipe
         4. exists with no interdependencies
          */
+
+        /*
+        Move this to documentation
+        Intented order of deletion:
+        1. Recipe (set produced Ingredients recipe to null)
+        2. produced Ingredient
+        3. proceed to Ingredient that where contained if wished for
+         */
+
         Ingredient ingredient =  ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
         if (!(ingredient.isBase()) && ingredient.getRecipe() != null) {
