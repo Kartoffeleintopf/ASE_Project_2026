@@ -2,9 +2,9 @@ package ase.warehouse;
 
 import ase.ingredient.Ingredient;
 import jakarta.persistence.*;
-/*
+
 @Entity
-public class Warehouse {
+public class WarehouseEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -16,9 +16,9 @@ public class Warehouse {
     @Column
     private int amount;
 
-    protected Warehouse() {}
+    protected WarehouseEntry() {}
 
-    public Warehouse(Ingredient ingredient) {
+    public WarehouseEntry(Ingredient ingredient) {
         this.ingredient = ingredient;
         this.amount = 0;
     }
@@ -41,4 +41,3 @@ public class Warehouse {
         setAmount(getAmount() - amount);
     }
 }
-*/
