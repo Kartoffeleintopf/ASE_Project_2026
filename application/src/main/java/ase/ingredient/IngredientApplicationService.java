@@ -1,5 +1,6 @@
 package ase.ingredient;
 
+import ase.recipe.Recipe;
 import ase.warehouse.WarehouseEntry;
 import ase.warehouse.WarehouseEntryRepository;
 import ase.recipe.RecipeRepository;
@@ -60,9 +61,15 @@ public class IngredientApplicationService {
         if (!(ingredient.isBase()) && ingredient.getRecipe() != null) {
             throw new IllegalArgumentException("Cannot delete ingredient produced by a recipe");
         }
-        if (false /* check if ingredient is used in a recipe */) {
-            throw new IllegalStateException("Cannot delete ingredient that is used in a recipe");
+        for (Recipe recipe : recipeRepository.findAll()) {
+            if (recipe.containsIngredient(ingredient)) {
+                throw new IllegalArgumentException("Cannot delete ingredient contained in a recipe");
+            }
         }
+/*
+        if ( recipeRepository.findAll(). ) {
+            throw new IllegalStateException("Cannot delete ingredient that is used in a recipe");
+        }*/
         warehouseEntryRepository.deleteByIngredient(ingredient);
         ingredientRepository.delete(ingredient);
     }
