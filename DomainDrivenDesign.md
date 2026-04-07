@@ -4,6 +4,7 @@ Relevante Begriffe werden mit ihrer fachlichen Bedeutung, Aufgaben und Regeln do
 
 ### Zutat (Ingredient)
 Eine Zutat ist ein im System verwaltetes Object welches Eigenschaften besitzt wie bspw. Lagerbestand und welches in Rezepten verwendet werden kann.
+Auf der Domainebene kann die base Variable nicht geändert werden, dies verhindert dass Service oder die Technical Ebene diese Invariante verändern können
 
 #### Eigenschaften
 - Name
