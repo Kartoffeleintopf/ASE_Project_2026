@@ -65,4 +65,20 @@ public class Recipe {
     public boolean containsIngredient(Ingredient ingredient) {
         return ingredientAmounts.containsKey(ingredient);
     }
+
+    public Map<Ingredient, Integer> getIngredientAmounts() {
+        return ingredientAmounts;
+    }
+
+    public void setIngredientAmounts(Map<Ingredient, Integer> ingredientAmounts) {
+        this.ingredientAmounts = ingredientAmounts;
+    }
+
+    public int getIngredientAmount(Ingredient ingredient) {
+        return ingredientAmounts.get(ingredient);
+    }
+
+    public void setIngredientAmount(Ingredient ingredient, int amount) {
+        ingredientAmounts.put(ingredient, amount);
+    }
 }
