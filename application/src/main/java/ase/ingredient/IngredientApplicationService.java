@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IngredientApplicationService {
@@ -54,6 +55,10 @@ public class IngredientApplicationService {
 
     public List<Ingredient> findAllIngredients() {
         return ingredientRepository.findAll();
+    }
+
+    public Optional<Ingredient> findIngredientById(long id) {
+        return ingredientRepository.findById(id);
     }
 
     public List<Ingredient> findByBase(boolean base) {
