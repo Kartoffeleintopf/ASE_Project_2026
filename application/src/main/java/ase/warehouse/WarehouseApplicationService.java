@@ -20,7 +20,7 @@ public class WarehouseApplicationService {
     }
 
     public List<WarehouseEntry> findAllInStock() {
-        return warehouseEntryRepository.findByAmountGreaterThan(0);
+        return findByAmountGreaterThan(0);
     }
 
     public List<WarehouseEntry> findByAmount(int amount) {
