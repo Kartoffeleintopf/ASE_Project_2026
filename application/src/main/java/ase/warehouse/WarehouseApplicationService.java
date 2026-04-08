@@ -44,25 +44,25 @@ public class WarehouseApplicationService {
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
     }
 
-    public WarehouseEntry findByID(Long id) {
+    public WarehouseEntry findEntryByID(Long id) {
         return warehouseEntryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
     }
 
     public WarehouseEntry addAmount(long id, int amount) {
-        WarehouseEntry entry = findByID(id);
+        WarehouseEntry entry = findEntryByID(id);
         entry.addAmount(amount);
         return warehouseEntryRepository.save(entry);
     }
 
     public WarehouseEntry subtractAmount(long id, int amount) {
-        WarehouseEntry entry = findByID(id);
+        WarehouseEntry entry = findEntryByID(id);
         entry.subtractAmount(amount);
         return warehouseEntryRepository.save(entry);
     }
 
     public WarehouseEntry setAmount(long id, int amount) {
-        WarehouseEntry entry = findByID(id);
+        WarehouseEntry entry = findEntryByID(id);
         entry.setAmount(amount);
         return warehouseEntryRepository.save(entry);
     }
