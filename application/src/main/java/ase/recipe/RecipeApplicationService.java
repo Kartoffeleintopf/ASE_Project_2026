@@ -87,18 +87,7 @@ public class RecipeApplicationService {
     }
 
     public void produceRecipe(long id) {
-        Recipe recipe = recipeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
-        recipe.getIngredientAmounts().forEach((ingredient, amount) -> {
-            WarehouseEntry entry = warehouseEntryRepository.findByIngredient(ingredient)
-                    .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
-            entry.subtractAmount(amount);
-            warehouseEntryRepository.save(entry);
-        });
-        WarehouseEntry produceEntry = warehouseEntryRepository.findByIngredient(recipe.getProduce())
-                .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
-        produceEntry.addAmount(1);
-        warehouseEntryRepository.save(produceEntry);
+        produceRecipeMultiple(id, 1);
     }
 
     public void produceRecipeMultiple(long id, int times) {
