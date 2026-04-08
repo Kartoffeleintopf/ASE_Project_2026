@@ -14,4 +14,5 @@ public interface WarehouseEntryRepository extends JpaRepository<WarehouseEntry, 
     List<WarehouseEntry> findByAmountGreaterThan(int amount);
     List<WarehouseEntry> findByAmount (int amount);
     List<WarehouseEntry> findByAmountLessThan(int amount);
+    List<WarehouseEntry> findByAmountGreaterThanAndAmountLessThan(int amount, int amount2);
 }
