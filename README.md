@@ -58,8 +58,8 @@ due to the refactor work currently going on this doesn't work anymore
 
 ### Intented Order of Deletion
 1. Recipe (set produced Ingredients recipe to null)
-2. produced Ingredient
-3. proceed to Ingredient that where contained if wished for
+2. produced Ingredient (if wished for)
+3. proceed to Ingredient that where contained (if wished for)
 
 ## MariaDB Setup
 Enthält die Schritte die getätigt wurden um die Datenbank einzurichten
