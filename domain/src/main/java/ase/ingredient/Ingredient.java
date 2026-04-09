@@ -13,7 +13,7 @@ public class Ingredient {
     private String name;
 
     @Column
-    private String picture; // represents pictureLink
+    private PictureLink picture;
 
     @Column
     private Boolean base;
@@ -27,7 +27,7 @@ public class Ingredient {
 
     public Ingredient(String name, String picture, boolean base) {
         this.name = name;
-        this.picture = picture;
+        this.picture = new PictureLink(picture);
         this.base = base;
         /*
         if (base) {
@@ -48,11 +48,11 @@ public class Ingredient {
     }
 
     public String getPicture() {
-        return picture;
+        return picture.getUrl();
     }
 
     public void setPicture(String picture) {
-        this.picture = picture;
+        this.picture = new PictureLink(picture);
     }
 
     public Boolean isBase() {
