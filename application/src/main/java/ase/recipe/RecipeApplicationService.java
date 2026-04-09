@@ -54,8 +54,11 @@ public class RecipeApplicationService {
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
     }
 
-    public Optional<Recipe> findByProduce(Ingredient ingredient) {
-        return recipeRepository.findByProduce(ingredient);
+    public Optional<Recipe> findByProduceID(long id) {
+        return recipeRepository.findByProduce(
+                ingredientRepository.findById(id)
+                        .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"))
+        );
     }
 
     public List<Recipe> findAllRecipes() {
