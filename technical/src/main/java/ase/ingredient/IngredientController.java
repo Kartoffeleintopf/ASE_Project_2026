@@ -46,6 +46,16 @@ public class IngredientController {
         return ingredientApplicationService.findByNameContaining(name);
     }
 
+    @PutMapping("/update/{id}")
+    public Ingredient updateIngredient(@PathVariable long id, @RequestBody IngredientDTO dto) {
+        return ingredientApplicationService.updateIngredient(id, dto.name(), dto.picture());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteIngredient(@PathVariable long id) {
+        ingredientApplicationService.deleteIngredient(id);
+    }
+
     // Could probably apply DRY here needs some work idk, later me i choose you GOOOOO!!!
 
     // ToDO
