@@ -3,6 +3,8 @@ package ase.recipe;
 import ase.ingredient.IngredientApplicationService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/recipes")
 public class RecipeController {
@@ -19,5 +21,15 @@ public class RecipeController {
     @PostMapping("/create")
     public Recipe createRecipe(@RequestBody RecipeDTO dto) {
         return recipeApplicationService.createRecipe(dto.name(), dto.produceId(), dto.ingredientAmounts());
+    }
+
+    @GetMapping("/all")
+    public List<Recipe> getAllRecipes() {
+        return recipeApplicationService.findAllRecipes();
+    }
+
+    @GetMapping("/id/{id}")
+    public Recipe getRecipeById(@PathVariable long id) {
+        return recipeApplicationService.findRecipeById(id);
     }
 }
