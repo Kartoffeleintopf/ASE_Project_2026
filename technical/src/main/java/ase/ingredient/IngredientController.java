@@ -41,6 +41,11 @@ public class IngredientController {
         return ingredientApplicationService.findIngredientById(id);
     }
 
+    @GetMapping("/search")
+    public List<Ingredient> searchByName(@RequestParam String name) {
+        return ingredientApplicationService.findByNameContaining(name);
+    }
+
     // Could probably apply DRY here needs some work idk, later me i choose you GOOOOO!!!
 
     // ToDO
