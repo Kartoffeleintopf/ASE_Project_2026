@@ -32,4 +32,9 @@ public class RecipeController {
     public Recipe getRecipeById(@PathVariable long id) {
         return recipeApplicationService.findRecipeById(id);
     }
+
+    @GetMapping("/search")
+    public List<Recipe> searchByName(@RequestParam String name) {
+        return recipeApplicationService.findByNameContaining(name);
+    }
 }
