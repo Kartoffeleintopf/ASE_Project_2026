@@ -19,12 +19,12 @@ public class WarehouseController {
     // General Queries
 
     @GetMapping("/all")
-    public List<WarehouseEntry> findAll() {
+    public List<WarehouseEntry> getAllWarehousesEntries() {
         return warehouseApplicationService.findAll();
     }
 
     @GetMapping("/instock")
-    public List<WarehouseEntry> findAllInStock() {
+    public List<WarehouseEntry> findAllInstockWarehouseEntries() {
         return warehouseApplicationService.findAllInStock();
     }
 
