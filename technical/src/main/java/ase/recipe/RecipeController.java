@@ -4,6 +4,7 @@ import ase.ingredient.IngredientApplicationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/recipes")
@@ -46,5 +47,33 @@ public class RecipeController {
     @DeleteMapping("/delete/{id}")
     public void deleteRecipe(@PathVariable long id) {
         recipeApplicationService.deleteRecipe(id);
+    }
+
+    @GetMapping("/producedBy/{ingredientId}")
+    public Optional<Recipe> getRecipeByProduce(@PathVariable long ingredientId) {
+        return recipeApplicationService.findByProduceID(ingredientId);
+    }
+
+    // Production
+
+    private void produceMultiple (long recipeID, int times) {
+        recipeApplicationService.produceRecipeMultiple(recipeID, times);
+    }
+
+    @PostMapping("/produce/{ingredientId}")
+    public void produceIngredient(@PathVariable long ingredientId) {
+        Recipe recipe = recipeApplicationService.findByProduceID(ingredientId)
+                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+        produceMultiple(recipe.getId(), 1);
+    }
+
+    @PostMapping("/execute/{id}")
+    public void produceRecipe(@PathVariable long id) {
+        produceMultiple(id, 1);
+    }
+
+    @PostMapping("/execute/{id}/multiple/{times}")
+    public void produceRecipeMultiple(@PathVariable long id, @PathVariable int times) {
+        produceMultiple(id, times);
     }
 }

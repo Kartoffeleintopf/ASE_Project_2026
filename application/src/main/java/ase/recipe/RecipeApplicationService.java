@@ -93,10 +93,12 @@ public class RecipeApplicationService {
         recipeRepository.delete(recipe);
     }
 
+    /*
     @Transactional
     public void produceRecipe(long id) {
         produceRecipeMultiple(id, 1);
     }
+    */
 
     @Transactional
     public void produceRecipeMultiple(long id, int times) {
