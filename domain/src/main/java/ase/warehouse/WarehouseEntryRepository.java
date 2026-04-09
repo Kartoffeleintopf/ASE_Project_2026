@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public interface WarehouseEntryRepository extends JpaRepository<WarehouseEntry, Long> {
     // Ingredient methods
-    Optional<WarehouseEntry> findByIngredient(long id);
-    void deleteByIngredient(long id);
+    Optional<WarehouseEntry> findByIngredientId(long id);
+    void deleteByIngredientId(long id);
 
     // Amount methods
     List<WarehouseEntry> findByAmountGreaterThan(int amount);

@@ -105,12 +105,12 @@ public class RecipeApplicationService {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
         recipe.getIngredientAmounts().forEach((ingredient, amount) -> {
-            WarehouseEntry entry = warehouseEntryRepository.findByIngredient(ingredient.getId())
+            WarehouseEntry entry = warehouseEntryRepository.findByIngredientId(ingredient.getId())
                     .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
             entry.subtractAmount(amount * times);
             warehouseEntryRepository.save(entry);
         });
-        WarehouseEntry produceEntry = warehouseEntryRepository.findByIngredient(recipe.getProduce().getId())
+        WarehouseEntry produceEntry = warehouseEntryRepository.findByIngredientId(recipe.getProduce().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
         produceEntry.addAmount(times);
         warehouseEntryRepository.save(produceEntry);
