@@ -70,10 +70,29 @@ public class RecipeApplicationService {
     }
 
     @Transactional
-    public Recipe updateRecipe(long id, String name, Map<Long, Integer> ingredientAmounts) {
+    public Recipe updateRecipe(long id,
+                               long produceId,
+                               String name,
+                               Map<Long, Integer> ingredientAmounts) {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
         recipe.setName(name);
+
+        // Checking if Produce changes, if new Produce is a base Ingredient
+        // and then if this Produce already has another Recipe
+        if (recipe.getProduce().getId() != produceId) {
+            Ingredient newProduce = ingredientRepository.findById(produceId)
+                    .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+            if (newProduce.isBase()) {
+                throw new IllegalStateException("Cannot assign a base ingredient as produce");
+            }
+            if (recipeRepository.findRecipeByProduce(newProduce).isPresent()) {
+                throw new IllegalStateException("Ingredient already has a recipe");
+            }
+            recipe.setProduce(newProduce);
+        }
+
+        // Clearing and Updating Map with new Ingredients and associated amounts
         recipe.getIngredientAmounts().clear();
         ingredientAmounts.forEach((ingredientId, amount) -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId)

@@ -41,7 +41,7 @@ public class RecipeController {
 
     @PutMapping("/update/{id}")
     public Recipe updateRecipe(@PathVariable long id, @RequestBody RecipeDTO dto) {
-        return recipeApplicationService.updateRecipe(id, dto.name(), dto.ingredientAmounts());
+        return recipeApplicationService.updateRecipe(id, dto.produceId(), dto.name(), dto.ingredientAmounts());
     }
 
     @DeleteMapping("/delete/{id}")
