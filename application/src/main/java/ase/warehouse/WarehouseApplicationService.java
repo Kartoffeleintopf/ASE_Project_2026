@@ -3,6 +3,7 @@ package ase.warehouse;
 import ase.ingredient.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,18 +50,21 @@ public class WarehouseApplicationService {
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
     }
 
+    @Transactional
     public WarehouseEntry addAmount(long id, int amount) {
         WarehouseEntry entry = findEntryByID(id);
         entry.addAmount(amount);
         return warehouseEntryRepository.save(entry);
     }
 
+    @Transactional
     public WarehouseEntry subtractAmount(long id, int amount) {
         WarehouseEntry entry = findEntryByID(id);
         entry.subtractAmount(amount);
         return warehouseEntryRepository.save(entry);
     }
 
+    @Transactional
     public WarehouseEntry setAmount(long id, int amount) {
         WarehouseEntry entry = findEntryByID(id);
         entry.setAmount(amount);

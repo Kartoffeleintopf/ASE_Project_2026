@@ -6,6 +6,7 @@ import ase.warehouse.WarehouseEntry;
 import ase.warehouse.WarehouseEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class RecipeApplicationService {
         this.warehouseEntryRepository = warehouseEntryRepository;
     }
 
+    @Transactional
     public Recipe createRecipe(String name, long produceId, Map<Long, Integer> ingredientAmounts) {
         Ingredient produce = ingredientRepository.findById(produceId)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
@@ -64,6 +66,7 @@ public class RecipeApplicationService {
         return recipeRepository.findByNameContaining(name);
     }
 
+    @Transactional
     public Recipe updateRecipe(long id, String name, Map<Long, Integer> ingredientAmounts) {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
@@ -77,6 +80,7 @@ public class RecipeApplicationService {
         return recipeRepository.save(recipe);
     }
 
+    @Transactional
     public void deleteRecipe(long id) {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
@@ -86,10 +90,12 @@ public class RecipeApplicationService {
         recipeRepository.delete(recipe);
     }
 
+    @Transactional
     public void produceRecipe(long id) {
         produceRecipeMultiple(id, 1);
     }
 
+    @Transactional
     public void produceRecipeMultiple(long id, int times) {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
