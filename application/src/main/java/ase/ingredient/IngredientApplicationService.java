@@ -53,8 +53,8 @@ public class IngredientApplicationService {
                 throw new IllegalArgumentException("Cannot delete ingredient contained in a recipe");
             }
         }
-        warehouseEntryRepository.deleteByIngredient(ingredient);
-        ingredientRepository.delete(ingredient);
+        warehouseEntryRepository.deleteByIngredient(id);
+        ingredientRepository.deleteById(id);
     }
 
     public List<Ingredient> findAllIngredients() {
