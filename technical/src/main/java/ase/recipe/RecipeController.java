@@ -49,7 +49,7 @@ public class RecipeController {
         recipeApplicationService.deleteRecipe(id);
     }
 
-    @GetMapping("/producedBy/{ingredientId}")
+    @GetMapping("/produces/{ingredientId}")
     public Optional<Recipe> getRecipeByProduceID(@PathVariable long ingredientId) {
         return recipeApplicationService.findByProduceID(ingredientId);
     }
