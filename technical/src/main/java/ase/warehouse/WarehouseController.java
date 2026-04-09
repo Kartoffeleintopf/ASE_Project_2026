@@ -35,6 +35,7 @@ public class WarehouseController {
         return warehouseApplicationService.findByIngredientID(ingredientId);
     }
 
+
     // Queries by Amount
 
     @GetMapping("/amount/{amount}")
@@ -57,5 +58,21 @@ public class WarehouseController {
         return warehouseApplicationService.findByAmountBetween(start, end);
     }
 
+
     // Modification of WarehouseEntry amounts
+
+    @PutMapping("/add/{id}")
+    public WarehouseEntry addAmount(@PathVariable long id, @RequestBody WarehouseEntryDTO dto) {
+        return warehouseApplicationService.addAmount(id, dto.amount());
+    }
+
+    @PutMapping("/subtract/{id}")
+    public WarehouseEntry subtractAmount(@PathVariable long id, @RequestBody WarehouseEntryDTO dto) {
+        return warehouseApplicationService.subtractAmount(id, dto.amount());
+    }
+
+    @PutMapping("/set/{id}")
+    public WarehouseEntry setAmount(@PathVariable long id, @RequestBody WarehouseEntryDTO dto) {
+        return warehouseApplicationService.setAmount(id, dto.amount());
+    }
 }

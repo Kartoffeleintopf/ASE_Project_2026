@@ -73,3 +73,9 @@ dass ein Rezept produzieren und eine herstellbare Zutat produzieren auseinanderg
 Da beide das selbe Wort (produzieren/produce) verwenden.
 Um diesen Problem bei der API Endpunkte Benennung aus dem Weg zu gehen,
 wird das produzieren eines Rezeptes umbenannt (Ausführen/execute).
+
+## API Endpunkte
+Die API Endpunkte fuer den WarehouseController welche sich mit der Modifikation der Zutatenmengen befassen,
+nutzen das WarehouseEntryDTO um die Mengen (amounts) zu verwalten.
+Dadurch befinden sich in den API Aufrufen nicht zwei Zahlen (IngredientID und Mengen/amount),
+sondern nur eine, Die IngredientID.
