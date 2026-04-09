@@ -38,7 +38,7 @@ public class WarehouseController {
 
     // Queries by Amount
 
-    @GetMapping("/amount/{amount}")
+    @GetMapping("/amount/exact/{amount}")
     public List<WarehouseEntry> findByAmount(@PathVariable int amount) {
         return warehouseApplicationService.findByAmount(amount);
     }
