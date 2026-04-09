@@ -44,10 +44,11 @@ class IngredientTest {
         assertFalse(nonBaseIngredient.isBase());
     }
 
+    /*
     @Test
     void baseIngredientHasNullRecipe() {
         assertNull(baseIngredient.getRecipe());
-    }
+    }*/
 
     @Test
     void equalsSameObject() {

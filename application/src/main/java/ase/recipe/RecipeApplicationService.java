@@ -34,8 +34,8 @@ public class RecipeApplicationService {
         if (produce.isBase()) {
             throw new IllegalStateException("Cannot create recipe for a base ingredient");
         }
-        if (produce.getRecipe() != null) {
-            throw new IllegalStateException("Ingredient already has a recipe");
+        if(recipeRepository.findRecipeByProduce(produce).isPresent()){
+            throw new IllegalArgumentException("Ingredient already has a recipe");
         }
         Recipe recipe = new Recipe(name, produce);
         ingredientAmounts.forEach((ingredientId, amount) -> {
@@ -44,7 +44,7 @@ public class RecipeApplicationService {
             recipe.addIngredient(ingredient, amount);
         });
         Recipe saved = recipeRepository.save(recipe);
-        produce.setRecipe(saved);
+        //produce.setRecipe(saved);
         ingredientRepository.save(produce);
         return saved;
     }
@@ -88,7 +88,7 @@ public class RecipeApplicationService {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
         Ingredient produce = recipe.getProduce();
-        produce.setRecipe(null);
+        //produce.setRecipe(null);
         ingredientRepository.save(produce);
         recipeRepository.delete(recipe);
     }

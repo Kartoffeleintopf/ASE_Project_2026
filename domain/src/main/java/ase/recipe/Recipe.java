@@ -51,7 +51,7 @@ public class Recipe {
 
     public void setProduce(Ingredient produce) {
         this.produce = produce;
-        produce.setRecipe(this);
+        //produce.setRecipe(this);
     }
 
     public void addIngredient(Ingredient ingredient, int amount) {

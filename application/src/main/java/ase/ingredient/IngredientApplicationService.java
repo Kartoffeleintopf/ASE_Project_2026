@@ -45,7 +45,7 @@ public class IngredientApplicationService {
     public void deleteIngredient(long id) {
         Ingredient ingredient =  ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
-        if (!(ingredient.isBase()) && ingredient.getRecipe() != null) {
+        if (!(ingredient.isBase()) && recipeRepository.findRecipeByProduce(ingredient).isPresent()) {
             throw new IllegalArgumentException("Cannot delete ingredient produced by a recipe");
         }
         for (Recipe recipe : recipeRepository.findAll()) {
