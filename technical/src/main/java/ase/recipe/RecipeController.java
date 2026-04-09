@@ -50,7 +50,7 @@ public class RecipeController {
     }
 
     @GetMapping("/producedBy/{ingredientId}")
-    public Optional<Recipe> getRecipeByProduce(@PathVariable long ingredientId) {
+    public Optional<Recipe> getRecipeByProduceID(@PathVariable long ingredientId) {
         return recipeApplicationService.findByProduceID(ingredientId);
     }
 
