@@ -34,7 +34,7 @@ public class RecipeController {
     }
 
     @GetMapping("/search")
-    public List<Recipe> searchByName(@RequestParam String name) {
+    public List<Recipe> searchRecipeByName(@RequestParam String name) {
         return recipeApplicationService.findByNameContaining(name);
     }
 }
