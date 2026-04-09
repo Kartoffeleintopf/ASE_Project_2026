@@ -37,9 +37,24 @@ public class WarehouseController {
 
     // Queries by Amount
 
-    @GetMapping("/{amount}")
+    @GetMapping("/amount/{amount}")
     public List<WarehouseEntry> findByAmount(@PathVariable int amount) {
         return warehouseApplicationService.findByAmount(amount);
+    }
+
+    @GetMapping("/amount/greater/{amount}")
+    public List<WarehouseEntry> findByAmountGreaterThan(@PathVariable int amount) {
+        return warehouseApplicationService.findByAmountGreaterThan(amount);
+    }
+
+    @GetMapping("/amount/less/{amount}")
+    public List<WarehouseEntry> findByAmountLessThan(@PathVariable int amount) {
+        return warehouseApplicationService.findByAmountLessThan(amount);
+    }
+
+    @GetMapping("/amount/between/{start}/{end}")
+    public List<WarehouseEntry> findByAmountBetween(@PathVariable int start, @PathVariable int end) {
+        return warehouseApplicationService.findByAmountBetween(start, end);
     }
 
     // Modification of WarehouseEntry amounts
