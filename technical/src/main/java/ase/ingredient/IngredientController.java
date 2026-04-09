@@ -40,7 +40,7 @@ public class IngredientController {
         return getByBase(false);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public Optional<Ingredient> getIngredientById(@PathVariable long id) {
         return ingredientApplicationService.findIngredientById(id);
     }
