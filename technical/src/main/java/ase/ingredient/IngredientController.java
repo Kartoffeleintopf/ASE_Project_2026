@@ -2,37 +2,32 @@ package ase.ingredient;
 
 import org.springframework.web.bind.annotation.*;
 
-/*
+
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
 
-    private final IngredientRepository ingredientRepository;
+    private final IngredientApplicationService ingredientApplicationService;
 
-    public IngredientController(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public IngredientController(IngredientApplicationService ingredientApplicationService) {
+        this.ingredientApplicationService = ingredientApplicationService;
     }
 
-    @PostMapping
-    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
-        return ingredientRepository.save(ingredient);
+    @PostMapping("/create")
+    public Ingredient createIngredient(@RequestBody IngredientDTO dto) {
+        return ingredientApplicationService.createIngredient(dto.name(), dto.picture(), dto.base());
     }
 
-    @GetMapping("/{ingredientID}")
-    public Ingredient getIngredientByID(@PathVariable long ingredientID) {
-        return ingredientRepository.findById(ingredientID).orElse(null);
-    }
+    // ToDO
+    /*
+    getAll
 
-    @GetMapping("/name/{ingredientID}")
-    public String getIngredientNameByID(@PathVariable long ingredientID) {
-        return Objects.requireNonNull(ingredientRepository.findById(ingredientID).orElse(null)).getName();
-        // look at this snippet again, it seems stupid
-    }
+    getByID
 
-    @DeleteMapping("/delete/{ingredientID}")
-    public void deleteIngredientByID(@PathVariable long ingredientID) {
-        ingredientRepository.deleteById(ingredientID);
-        //check for existence
-    }
+    searchByName
+
+    update
+
+    delete
+     */
 }
-*/
