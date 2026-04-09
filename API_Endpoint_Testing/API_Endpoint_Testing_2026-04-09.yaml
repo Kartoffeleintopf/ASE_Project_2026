@@ -1,0 +1,969 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: ASE-Project
+meta:
+  id: wrk_e9a460d995a741e39360b71e9c3371af
+  created: 1771236339707
+  modified: 1771236339707
+  description: ""
+collection:
+  - name: Ingredient-Endpoints
+    meta:
+      id: fld_17481802fbea4346be171da8d6399ed3
+      created: 1775750302802
+      modified: 1775752796222
+      sortKey: -1775752781928
+      description: ""
+    children:
+      - url: http://localhost:8080/ingredients/create
+        name: createIngredient1
+        meta:
+          id: req_31c574558eab40f68f909ece4e4fe63d
+          created: 1771952021166
+          modified: 1775754698607
+          isPrivate: false
+          description: ""
+          sortKey: -1775750410045
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "tomato",
+            	"picture": "tomato.png",
+            	"base": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/id/1
+        name: getIngredientByID
+        meta:
+          id: req_8add576f4bbe476492ac6b89c243d0f3
+          created: 1772284928181
+          modified: 1775751513277
+          isPrivate: false
+          description: ""
+          sortKey: -1775750305615
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/delete/3
+        name: deleteIngredientByID
+        meta:
+          id: req_304a085d4b3a489bb75042166457fd45
+          created: 1772534186328
+          modified: 1775754340564
+          isPrivate: false
+          description: ""
+          sortKey: -1775750305415
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/all
+        name: getAllIngredients
+        meta:
+          id: req_5d32de5490fe40e6b06c611e1ad34ca1
+          created: 1775750409945
+          modified: 1775750487249
+          isPrivate: false
+          description: ""
+          sortKey: -1775750409945
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/base
+        name: getBaseIngredients
+        meta:
+          id: req_56c853e685c9484e956124731530d909
+          created: 1775750501823
+          modified: 1775750586036
+          isPrivate: false
+          description: ""
+          sortKey: -1775750357780
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/nonbase
+        name: getNonBaseIngredients
+        meta:
+          id: req_2835149ef6cf46e9b05e5469afe13ece
+          created: 1775750543400
+          modified: 1775750592272
+          isPrivate: false
+          description: ""
+          sortKey: -1775750331697.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/search
+        name: searchByName
+        meta:
+          id: req_d51ae42db4c64d57a51116c1e3c675c1
+          created: 1775750616043
+          modified: 1775750829666
+          isPrivate: false
+          description: ""
+          sortKey: -1775750305515
+        method: GET
+        parameters:
+          - name: name
+            value: tomato
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/update/3
+        name: updateIngredient1
+        meta:
+          id: req_3248bc92d4b24e32a743d41f2ffa68a1
+          created: 1775750848224
+          modified: 1775754287282
+          isPrivate: false
+          description: ""
+          sortKey: -1775750305465
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "name": "potato",
+                "picture": "potato.png",
+                "base": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/create
+        name: createIngredient2
+        meta:
+          id: req_5c577da3be4e4de888bd6215c85b00a5
+          created: 1775751417765
+          modified: 1775769852543
+          isPrivate: false
+          description: ""
+          sortKey: -1775750409995
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "tomatosoup",
+            	"picture": "tomatosoup.png",
+            	"base": false
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/create
+        name: createIngredient3
+        meta:
+          id: req_b472724710c34e0b9bd9fe701d7c58e6
+          created: 1775754120829
+          modified: 1775754711229
+          isPrivate: false
+          description: ""
+          sortKey: -1775750409970
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "apple",
+            	"picture": "apple.png",
+            	"base": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/update/3
+        name: updateIngredient2
+        meta:
+          id: req_cac3c23da78e4c9e9aca23ffbe856447
+          created: 1775754292305
+          modified: 1775754724739
+          isPrivate: false
+          description: ""
+          sortKey: -1775750305440
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "apple",
+            	"picture": "apple.png",
+            	"base": true
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/ingredients/create
+        name: createIngredient4
+        meta:
+          id: req_b0ae571a2814482b88878de7a6cbe692
+          created: 1775754970511
+          modified: 1775755022043
+          isPrivate: false
+          description: ""
+          sortKey: -1775750409957.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "applesoup",
+            	"picture": "applesoup.png",
+            	"base": false
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Versuch
+    meta:
+      id: fld_6b7cb40443534ce59aab28699c187945
+      created: 1775750325745
+      modified: 1775750325745
+      sortKey: -1775750325745
+      description: ""
+    children:
+      - url: http://localhost:8080/Versuch?name=yeet
+        name: Versuch
+        meta:
+          id: req_bc10b9e5863c4b62a226fc2bbcb867c5
+          created: 1771236379398
+          modified: 1775750359433
+          isPrivate: false
+          description: GET Request auf die Versuchs Schnittstelle
+          sortKey: -1775750359399
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.1
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Recipe-Endpoints
+    meta:
+      id: fld_370fef0ceaba459c8b97a9caff803b7b
+      created: 1775750332868
+      modified: 1775752794065
+      sortKey: -1775752781828
+      description: ""
+    children:
+      - url: http://localhost:8080/recipes/create
+        name: createRecipe1
+        meta:
+          id: req_deb3648a71a34050a5a0bfcdcfefabe9
+          created: 1775752803955
+          modified: 1775767783834
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855995
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "name": "tomatosoupRecipe",
+                "produceId": 2,
+                "ingredientAmounts": {
+                    "1": 2
+                }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/all
+        name: getAllRecipes
+        meta:
+          id: req_3340c1b08c4542129a7d3cf0b9ff5230
+          created: 1775754426949
+          modified: 1775754455211
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855895
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/id/1
+        name: getRecipeByID
+        meta:
+          id: req_d74f32a40d564edca2f57c920d8a63b5
+          created: 1775754463313
+          modified: 1775754876079
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855795
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/search
+        name: searchRecipeByName
+        meta:
+          id: req_1a382dcbac0b4064984aa2f8266cb677
+          created: 1775754539116
+          modified: 1775754659201
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855695
+        method: GET
+        parameters:
+          - name: name
+            value: tomato
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/update/1
+        name: updateRecipe
+        meta:
+          id: req_b58c82b614b342038a40ae196860d65c
+          created: 1775754771108
+          modified: 1775768895699
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855595
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "name": "test",
+                "produceId": 2,
+                "ingredientAmounts": {
+                    "1": 1
+                }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/delete/2
+        name: deleteRecipe
+        meta:
+          id: req_f86d3e2f9c684709935a62c4b4451068
+          created: 1775754792102
+          modified: 1775768787934
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855495
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/produces/2
+        name: getRecipeByProduceID
+        meta:
+          id: req_60ac446cf57e448e84e515630e5c9b0e
+          created: 1775757804876
+          modified: 1775767630462
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855395
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/execute/1/multiple/2
+        name: produceRecipeMultiple
+        meta:
+          id: req_eb97a73ee0eb42ba9b909cfc7e5e8420
+          created: 1775758054268
+          modified: 1775767402612
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855095
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/execute/1
+        name: produceRecipe
+        meta:
+          id: req_98628a49d8b34207bc9ae04f218cc71f
+          created: 1775758057943
+          modified: 1775767399597
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855195
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/produce/2
+        name: produceIngredient
+        meta:
+          id: req_33b7ab61fe3c4830a9cc6684444de246
+          created: 1775758060640
+          modified: 1775768925199
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855295
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/create
+        name: createRecipe2
+        meta:
+          id: req_49912240709743439774296627d1358a
+          created: 1775767763352
+          modified: 1775767804892
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855945
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "name": "applesoupRecipe",
+                "produceId": 4,
+                "ingredientAmounts": {
+                    "1": 2
+                }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Warehouse-Endpoints
+    meta:
+      id: fld_fdb42ccddfdd4572a756e49d61d9ea20
+      created: 1775752781628
+      modified: 1775752781628
+      sortKey: -1775752781628
+      description: ""
+    children:
+      - url: http://localhost:8080/warehouse/all
+        name: getAllWarehouseEntries
+        meta:
+          id: req_1f9fb743858648718f53a1e7eaa2192d
+          created: 1775762522648
+          modified: 1775763021812
+          isPrivate: false
+          description: ""
+          sortKey: -1775762995858
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/set
+        name: setAmount
+        meta:
+          id: req_79881dbebd1e427d85d69b7e01ae23c0
+          created: 1775762878293
+          modified: 1775769003372
+          isPrivate: false
+          description: ""
+          sortKey: -1775762878293
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "ingredientId": 3,
+                "amount": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/subtract
+        name: subtractAmount
+        meta:
+          id: req_99de1d52dee24208b82b419ce5e9953e
+          created: 1775762898236
+          modified: 1775767207665
+          isPrivate: false
+          description: ""
+          sortKey: -1775762898236
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "ingredientId": 1,
+                "amount": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/add
+        name: addAmount
+        meta:
+          id: req_529b8943c9b540f2a47403bb509d77f0
+          created: 1775762908386
+          modified: 1775767203906
+          isPrivate: false
+          description: ""
+          sortKey: -1775762908386
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "ingredientId": 1,
+                "amount": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/amount/between/3/5
+        name: findByAmountBetween
+        meta:
+          id: req_556a14d6908e4393abed21fda67f109b
+          created: 1775762913790
+          modified: 1775768978420
+          isPrivate: false
+          description: ""
+          sortKey: -1775762913790
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/amount/less/1
+        name: findByAmountLessThan
+        meta:
+          id: req_c1c6da721864489595ab9f341b3df8d4
+          created: 1775762925913
+          modified: 1775763164586
+          isPrivate: false
+          description: ""
+          sortKey: -1775762925913
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/amount/greater/0
+        name: findByAmountGreaterThan
+        meta:
+          id: req_f1ef8cf067ab4ae58cda42772ceb79ce
+          created: 1775762938994
+          modified: 1775763139054
+          isPrivate: false
+          description: ""
+          sortKey: -1775762938994
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/amount/exact/0
+        name: findByAmountExact
+        meta:
+          id: req_fe21bb2c70164510842a3506df27e0fc
+          created: 1775762952425
+          modified: 1775768952040
+          isPrivate: false
+          description: ""
+          sortKey: -1775762952425
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/ingredient/1
+        name: findByIngredientID
+        meta:
+          id: req_95a553b78ac4430990cdc7e9ffb0679b
+          created: 1775762982965
+          modified: 1775763087905
+          isPrivate: false
+          description: ""
+          sortKey: -1775762982965
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/instock
+        name: findAllInstockWarehouseEntries
+        meta:
+          id: req_73fb20b300cb4c14bbedab1becb65ad0
+          created: 1775762995758
+          modified: 1775763038497
+          isPrivate: false
+          description: ""
+          sortKey: -1775762995758
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_b17f8c3ccca60bba9b36d345787a3a2ab8e3c1d0
+    created: 1771236339709
+    modified: 1771236339709
+environments:
+  name: Base Environment
+  meta:
+    id: env_b17f8c3ccca60bba9b36d345787a3a2ab8e3c1d0
+    created: 1771236339708
+    modified: 1771236339708
+    isPrivate: false
