@@ -6,6 +6,7 @@ import ase.warehouse.WarehouseEntryRepository;
 import ase.recipe.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +25,14 @@ public class IngredientApplicationService {
         this.recipeRepository = recipeRepository;
     }
 
+    @Transactional
     public Ingredient createIngredient(String name, String picture, boolean base) {
         Ingredient ingredient = ingredientRepository.save(new Ingredient(name, picture, base));
         warehouseEntryRepository.save(new WarehouseEntry(ingredient));
         return ingredient;
     }
 
+    @Transactional
     public Ingredient updateIngredient(long id, String name, String picture) {
         Ingredient ingredient = ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
@@ -38,6 +41,7 @@ public class IngredientApplicationService {
         return ingredientRepository.save(ingredient);
     }
 
+    @Transactional
     public void deleteIngredient(long id) {
         Ingredient ingredient =  ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
