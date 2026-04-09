@@ -1,6 +1,5 @@
 package ase.warehouse;
 
-import ase.ingredient.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +39,8 @@ public class WarehouseApplicationService {
         return warehouseEntryRepository.findByAmountGreaterThanAndAmountLessThan(start, end);
     }
 
-    public WarehouseEntry findByIngredient(Ingredient ingredient) {
-        return warehouseEntryRepository.findByIngredient(ingredient)
+    public WarehouseEntry findByIngredientID(long ingredientID) {
+        return warehouseEntryRepository.findByIngredientID(ingredientID)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
     }
 
