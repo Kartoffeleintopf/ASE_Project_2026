@@ -23,11 +23,24 @@ public class IngredientController {
     @GetMapping("/all")
     public List<Ingredient> getAllIngredients() {
         return ingredientApplicationService.findAllIngredients();
-        }
+    }
+
+    @GetMapping("/base")
+    public List<Ingredient> getBaseIngredients() {
+        return ingredientApplicationService.findByBase(true);
+    }
+
+    @GetMapping("/nonbase")
+    public List<Ingredient> getNonBaseIngredients() {
+        return ingredientApplicationService.findByBase(false);
+    }
+
+    // Could probably apply DRY here needs some work idk, later me i choose you GOOOOO!!!
 
     // ToDO
     /*
     getAll - filter based on base (true/false) or as additional methods, maybe routed through idk
+    maybe not
 
     getByID
 
