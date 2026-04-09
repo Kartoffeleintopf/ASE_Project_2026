@@ -1,6 +1,5 @@
 package ase.warehouse;
 
-import ase.ingredient.IngredientApplicationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,7 @@ public class WarehouseController {
 
     private final WarehouseApplicationService warehouseApplicationService;
 
-    public WarehouseController(WarehouseApplicationService warehouseApplicationService,
-                               IngredientApplicationService ingredientApplicationService) {
+    public WarehouseController(WarehouseApplicationService warehouseApplicationService) {
         this.warehouseApplicationService = warehouseApplicationService;
     }
 
