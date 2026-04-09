@@ -10,12 +10,10 @@ import java.util.List;
 public class WarehouseController {
 
     private final WarehouseApplicationService warehouseApplicationService;
-    private final IngredientApplicationService ingredientApplicationService;
 
     public WarehouseController(WarehouseApplicationService warehouseApplicationService,
                                IngredientApplicationService ingredientApplicationService) {
         this.warehouseApplicationService = warehouseApplicationService;
-        this.ingredientApplicationService = ingredientApplicationService;
     }
 
     // General Queries
