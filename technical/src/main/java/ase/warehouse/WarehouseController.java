@@ -22,4 +22,9 @@ public class WarehouseController {
     public List<WarehouseEntry> findAll() {
         return warehouseApplicationService.findAll();
     }
+
+    @GetMapping("/instock")
+    public List<WarehouseEntry> findAllInStock() {
+        return warehouseApplicationService.findAllInStock();
+    }
 }
