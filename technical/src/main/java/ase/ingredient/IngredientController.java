@@ -3,6 +3,7 @@ package ase.ingredient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -33,6 +34,11 @@ public class IngredientController {
     @GetMapping("/nonbase")
     public List<Ingredient> getNonBaseIngredients() {
         return ingredientApplicationService.findByBase(false);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Ingredient> getIngredientById(@PathVariable long id) {
+        return ingredientApplicationService.findIngredientById(id);
     }
 
     // Could probably apply DRY here needs some work idk, later me i choose you GOOOOO!!!
