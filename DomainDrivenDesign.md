@@ -79,3 +79,4 @@ Die API Endpunkte fuer den WarehouseController welche sich mit der Modifikation 
 nutzen das WarehouseEntryDTO um die Mengen (amounts) zu verwalten.
 Dadurch befinden sich in den API Aufrufen nicht zwei Zahlen (IngredientID und Mengen/amount),
 sondern nur eine, Die IngredientID.
+Eine noch bessere Lösung ist es die IngredientID aus dem DTO zu entnehmen.

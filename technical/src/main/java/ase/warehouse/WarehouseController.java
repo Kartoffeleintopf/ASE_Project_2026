@@ -57,18 +57,18 @@ public class WarehouseController {
 
     // Modification of WarehouseEntry amounts
 
-    @PutMapping("/add/{id}")
-    public WarehouseEntry addAmount(@PathVariable long id, @RequestBody WarehouseEntryDTO dto) {
-        return warehouseApplicationService.addAmount(id, dto.amount());
+    @PutMapping("/add")
+    public WarehouseEntry addAmount(@RequestBody WarehouseEntryDTO dto) {
+        return warehouseApplicationService.addAmount(dto.ingredientId(), dto.amount());
     }
 
-    @PutMapping("/subtract/{id}")
-    public WarehouseEntry subtractAmount(@PathVariable long id, @RequestBody WarehouseEntryDTO dto) {
-        return warehouseApplicationService.subtractAmount(id, dto.amount());
+    @PutMapping("/subtract")
+    public WarehouseEntry subtractAmount(@RequestBody WarehouseEntryDTO dto) {
+        return warehouseApplicationService.subtractAmount(dto.ingredientId(), dto.amount());
     }
 
-    @PutMapping("/set/{id}")
-    public WarehouseEntry setAmount(@PathVariable long id, @RequestBody WarehouseEntryDTO dto) {
-        return warehouseApplicationService.setAmount(id, dto.amount());
+    @PutMapping("/set")
+    public WarehouseEntry setAmount(@RequestBody WarehouseEntryDTO dto) {
+        return warehouseApplicationService.setAmount(dto.ingredientId(), dto.amount());
     }
 }
