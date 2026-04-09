@@ -26,14 +26,18 @@ public class IngredientController {
         return ingredientApplicationService.findAllIngredients();
     }
 
+    private List<Ingredient> getByBase(boolean base) {
+        return ingredientApplicationService.findByBase(base);
+    }
+
     @GetMapping("/base")
     public List<Ingredient> getBaseIngredients() {
-        return ingredientApplicationService.findByBase(true);
+        return getByBase(true);
     }
 
     @GetMapping("/nonbase")
     public List<Ingredient> getNonBaseIngredients() {
-        return ingredientApplicationService.findByBase(false);
+        return getByBase(false);
     }
 
     @GetMapping("/{id}")
@@ -55,20 +59,4 @@ public class IngredientController {
     public void deleteIngredient(@PathVariable long id) {
         ingredientApplicationService.deleteIngredient(id);
     }
-
-    // Could probably apply DRY here needs some work idk, later me i choose you GOOOOO!!!
-
-    // ToDO
-    /*
-    getAll - filter based on base (true/false) or as additional methods, maybe routed through idk
-    maybe not
-
-    getByID
-
-    searchByName
-
-    update
-
-    delete
-     */
 }
