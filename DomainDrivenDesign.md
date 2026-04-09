@@ -12,7 +12,7 @@ Auf der Domainebene kann die base Variable nicht geändert werden, dies verhinde
 - Lagerbestand
 
 #### Regeln
-- Kann eine Grundzutate seinoder eine durch ein Rezept herstellbare Zutat sein.
+- Kann eine Grundzutat sein oder eine durch ein Rezept herstellbare Zutat sein.
 - Kann in einem Rezept für andere Zutaten verwendet werden.
 - Lagerbestand darf nicht kleiner als 0 sein (Lagerbestand >= 0)
 
@@ -66,3 +66,8 @@ Das Lager enthält alle Zutaten jeder Art in den vorhandenen Mengen
 ### Entscheidung ob vererbung
 Soll Ingredient eine Superklasse sein die an BaseIngredient und an RecipeIngredient vererbt.
 Nein
+
+## Produzieren
+Beim API Endpunkte erstellen ist mir aufgefallen,
+dass ein Rezept produzieren und eine herstellbare Zutat produzieren auseinandergehalten werden muss.
+Da beide das selbe Wort (produzieren/produce) verwenden.
