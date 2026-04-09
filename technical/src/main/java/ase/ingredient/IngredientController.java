@@ -3,7 +3,7 @@ package ase.ingredient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
-
+/*
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
@@ -44,5 +44,6 @@ public class IngredientController {
     Rezept produzieren (maybe need another controller for that?!
 
     Lagerbestand einsehen Neues rezept erstellen
-     */
+
 }
+*/
