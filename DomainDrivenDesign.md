@@ -71,3 +71,5 @@ Nein
 Beim API Endpunkte erstellen ist mir aufgefallen,
 dass ein Rezept produzieren und eine herstellbare Zutat produzieren auseinandergehalten werden muss.
 Da beide das selbe Wort (produzieren/produce) verwenden.
+Um diesen Problem bei der API Endpunkte Benennung aus dem Weg zu gehen,
+wird das produzieren eines Rezeptes umbenannt (Ausführen/execute).
