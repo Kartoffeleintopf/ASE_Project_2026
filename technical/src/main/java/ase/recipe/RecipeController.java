@@ -37,4 +37,14 @@ public class RecipeController {
     public List<Recipe> searchRecipeByName(@RequestParam String name) {
         return recipeApplicationService.findByNameContaining(name);
     }
+
+    @PutMapping("/update/{id}")
+    public Recipe updateRecipe(@PathVariable long id, @RequestBody RecipeDTO dto) {
+        return recipeApplicationService.updateRecipe(id, dto.name(), dto.ingredientAmounts());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteRecipe(@PathVariable long id) {
+        recipeApplicationService.deleteRecipe(id);
+    }
 }
