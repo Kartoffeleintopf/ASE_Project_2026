@@ -40,7 +40,7 @@ public class WarehouseApplicationService {
     }
 
     public WarehouseEntry findByIngredientID(long ingredientID) {
-        return warehouseEntryRepository.findByIngredientID(ingredientID)
+        return warehouseEntryRepository.findByIngredient(ingredientID)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
     }
 
