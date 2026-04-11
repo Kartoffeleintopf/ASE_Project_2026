@@ -42,12 +42,13 @@ public class RecipeApplicationService {
         if(recipeRepository.findRecipeByProduce(produce).isPresent()){
             throw new IllegalArgumentException("Ingredient already has a recipe");
         }
-        Recipe recipe = new Recipe(name, produce);
+        RecipeBuilder builder = new RecipeBuilder(name, produce);
         ingredientAmounts.forEach((ingredientId, amount) -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId)
                     .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
-            recipe.addIngredient(ingredient, amount);
+            builder.addIngredient(ingredient, amount);
         });
+        Recipe recipe = builder.build();
         Recipe saved = recipeRepository.save(recipe);
         //produce.setRecipe(saved);
         ingredientRepository.save(produce);
