@@ -1,5 +1,6 @@
 package ase.production;
 
+import ase.ingredient.Ingredient;
 import ase.recipe.Recipe;
 import ase.warehouse.WarehouseEntry;
 
@@ -7,19 +8,21 @@ import java.util.Map;
 
 public class ProductionService {
 
-    public void produceRecipe(Recipe recipe, Map<ase.ingredient.Ingredient, WarehouseEntry> entries, int times) {
-        // First check all ingredients have sufficient stock
-        recipe.getIngredientAmounts().forEach((ingredient, amount) -> {
-            WarehouseEntry entry = entries.get(ingredient);
-            if (entry.getAmount() < amount * times) {
-                throw new IllegalArgumentException("Insufficient stock of ingredient: " + ingredient.getName());
+    public boolean isRecipeProducible(Recipe recipe, Map<Ingredient, WarehouseEntry> entries, int times) {
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredientAmounts().entrySet()) {
+            if (entries.get(entry.getKey()).getAmount() < entry.getValue() * times) {
+                return false;
             }
-        });
+        }
+        return true;
+    }
 
-        // Then subtract and add atomically
-        recipe.getIngredientAmounts().forEach((ingredient, amount) -> {
-            entries.get(ingredient).subtractAmount(amount * times);
-        });
+    public void produceRecipe(Recipe recipe, Map<Ingredient, WarehouseEntry> entries, int times) {
+        if (!isRecipeProducible(recipe, entries, times)) {
+            throw new IllegalArgumentException("Recipe is not producible");
+        }
+        recipe.getIngredientAmounts().forEach((ingredient, amount) ->
+                entries.get(ingredient).subtractAmount(amount * times));
 
         entries.get(recipe.getProduce()).addAmount(times);
     }
