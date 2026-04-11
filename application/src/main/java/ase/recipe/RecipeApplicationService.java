@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RecipeApplicationService {
@@ -39,20 +36,39 @@ public class RecipeApplicationService {
         if (produce.isBase()) {
             throw new IllegalStateException("Cannot create recipe for a base ingredient");
         }
-        if(recipeRepository.findRecipeByProduce(produce).isPresent()){
+        if (recipeRepository.findRecipeByProduce(produce).isPresent()) {
             throw new IllegalArgumentException("Ingredient already has a recipe");
         }
         RecipeBuilder builder = new RecipeBuilder(name, produce);
         ingredientAmounts.forEach((ingredientId, amount) -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId)
                     .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+            if (ingredientRequiresSelf(produce, ingredient)) {
+                throw new IllegalArgumentException("Recipe would create a cyclic dependency");
+            }
             builder.addIngredient(ingredient, amount);
         });
         Recipe recipe = builder.build();
-        Recipe saved = recipeRepository.save(recipe);
+        recipeRepository.save(recipe);
         //produce.setRecipe(saved);
         ingredientRepository.save(produce);
-        return saved;
+        return recipe;
+    }
+
+    private boolean ingredientRequiresSelf(Ingredient produce, Ingredient ingredient) {
+        if (ingredient.equals(produce)) {
+            return true;
+        }
+        Optional<Recipe> subRecipe = recipeRepository.findRecipeByProduce(ingredient);
+        if (subRecipe.isEmpty()) {
+            return false;
+        }
+        for (Ingredient subIngredient : subRecipe.get().getIngredientAmounts().keySet()) {
+            if (ingredientRequiresSelf(produce, subIngredient)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Recipe findRecipeById(long id) {
@@ -84,8 +100,6 @@ public class RecipeApplicationService {
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
         recipe.setName(name);
 
-        // Checking if Produce changes, if new Produce is a base Ingredient
-        // and then if this Produce already has another Recipe
         if (recipe.getProduce().getId() != produceId) {
             Ingredient newProduce = ingredientRepository.findById(produceId)
                     .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
@@ -98,11 +112,13 @@ public class RecipeApplicationService {
             recipe.setProduce(newProduce);
         }
 
-        // Clearing and Updating Map with new Ingredients and associated amounts
         recipe.getIngredientAmounts().clear();
         ingredientAmounts.forEach((ingredientId, amount) -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId)
                     .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+            if (ingredientRequiresSelf(recipe.getProduce(), ingredient)) {
+                throw new IllegalArgumentException("Recipe contains ingredient it will produce --> cyclic dependency");
+            }
             recipe.addIngredient(ingredient, amount);
         });
         return recipeRepository.save(recipe);
@@ -150,5 +166,30 @@ public class RecipeApplicationService {
         Map<Ingredient, WarehouseEntry> entries = buildEntriesMap(recipe);
         productionService.produceRecipe(recipe, entries, times);
         entries.values().forEach(warehouseEntryRepository::save);
+    }
+
+    public List<Ingredient> getDirectIngredients(long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+        return productionService.getDirectIngredients(recipe);
+    }
+
+    public List<Ingredient> getBaseIngredients(long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+        List<Ingredient> baseIngredients = new ArrayList<>();
+        collectBaseIngredients(recipe, baseIngredients);
+        return baseIngredients;
+    }
+
+    private void collectBaseIngredients(Recipe recipe, List<Ingredient> baseIngredients) {
+        for (Ingredient ingredient : recipe.getIngredientAmounts().keySet()) {
+            Optional<Recipe> subRecipe = recipeRepository.findRecipeByProduce(ingredient);
+            if (subRecipe.isEmpty() || ingredient.isBase()) {
+                baseIngredients.add(ingredient);
+            } else {
+                collectBaseIngredients(subRecipe.get(), baseIngredients);
+            }
+        }
     }
 }
