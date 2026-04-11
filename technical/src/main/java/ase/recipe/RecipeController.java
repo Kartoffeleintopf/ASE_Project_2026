@@ -1,5 +1,6 @@
 package ase.recipe;
 
+import ase.ingredient.Ingredient;
 import ase.ingredient.IngredientApplicationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,16 @@ public class RecipeController {
     @GetMapping("/search")
     public List<Recipe> searchRecipeByName(@RequestParam String name) {
         return recipeApplicationService.findByNameContaining(name);
+    }
+
+    @GetMapping("/required/direct/{id}")
+    public List<Ingredient> requiredDirectIngredients(@PathVariable long id) {
+        return recipeApplicationService.getDirectIngredients(id);
+    }
+
+    @GetMapping("/required/base/{id}")
+    public List<Ingredient> requiredBaseIngredients(@PathVariable long id) {
+        return recipeApplicationService.getBaseIngredients(id);
     }
 
     @PutMapping("/update/{id}")
