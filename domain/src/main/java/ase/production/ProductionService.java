@@ -5,6 +5,8 @@ import ase.recipe.Recipe;
 import ase.warehouse.WarehouseEntry;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -27,5 +29,9 @@ public class ProductionService {
                 entries.get(ingredient).subtractAmount(amount * times));
 
         entries.get(recipe.getProduce()).addAmount(times);
+    }
+
+    public List<Ingredient> getDirectIngredients(Recipe recipe) {
+        return new ArrayList<>(recipe.getIngredientAmounts().keySet());
     }
 }
