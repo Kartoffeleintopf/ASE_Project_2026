@@ -43,11 +43,14 @@ public class IngredientApplicationService {
 
     @Transactional
     public void deleteIngredient(long id) {
+        // Does it exist?
         Ingredient ingredient =  ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+        // Is it produced by a recipe?
         if (!(ingredient.isBase()) && recipeRepository.findRecipeByProduce(ingredient).isPresent()) {
             throw new IllegalArgumentException("Cannot delete ingredient produced by a recipe");
         }
+        // Is it used in a recipe?
         for (Recipe recipe : recipeRepository.findAll()) {
             if (recipe.containsIngredient(ingredient)) {
                 throw new IllegalArgumentException("Cannot delete ingredient contained in a recipe");
