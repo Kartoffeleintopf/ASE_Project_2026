@@ -49,6 +49,11 @@ public class RecipeController {
         recipeApplicationService.deleteRecipe(id);
     }
 
+    @GetMapping("/producible/{id}")
+    public boolean isRecipeProducible(@PathVariable long id, @RequestParam(defaultValue = "1") int times) {
+        return recipeApplicationService.isRecipeProducible(id, times);
+    }
+
     @GetMapping("/produces/{ingredientId}")
     public Optional<Recipe> getRecipeByProduceID(@PathVariable long ingredientId) {
         return recipeApplicationService.findByProduceID(ingredientId);

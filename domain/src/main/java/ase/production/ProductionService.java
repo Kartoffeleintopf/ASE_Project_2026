@@ -3,9 +3,11 @@ package ase.production;
 import ase.ingredient.Ingredient;
 import ase.recipe.Recipe;
 import ase.warehouse.WarehouseEntry;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Service
 public class ProductionService {
 
     public boolean isRecipeProducible(Recipe recipe, Map<Ingredient, WarehouseEntry> entries, int times) {

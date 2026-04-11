@@ -2,12 +2,14 @@ package ase.recipe;
 
 import ase.ingredient.Ingredient;
 import ase.ingredient.IngredientRepository;
+import ase.production.ProductionService;
 import ase.warehouse.WarehouseEntry;
 import ase.warehouse.WarehouseEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,14 +19,17 @@ public class RecipeApplicationService {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
     private final WarehouseEntryRepository warehouseEntryRepository;
+    private final ProductionService productionService;
 
     @Autowired
     public RecipeApplicationService(RecipeRepository recipeRepository,
                                     IngredientRepository ingredientRepository,
-                                    WarehouseEntryRepository warehouseEntryRepository) {
+                                    WarehouseEntryRepository warehouseEntryRepository,
+                                    ProductionService productionService) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.warehouseEntryRepository = warehouseEntryRepository;
+        this.productionService = productionService;
     }
 
     @Transactional
@@ -119,19 +124,30 @@ public class RecipeApplicationService {
     }
     */
 
+    private Map<Ingredient, WarehouseEntry> buildEntriesMap(Recipe recipe) {
+        Map<Ingredient, WarehouseEntry> entries = new HashMap<>();
+        recipe.getIngredientAmounts().keySet().forEach(ingredient -> {
+            WarehouseEntry entry = warehouseEntryRepository.findByIngredientId(ingredient.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
+            entries.put(ingredient, entry);
+        });
+        entries.put(recipe.getProduce(), warehouseEntryRepository.findByIngredientId(recipe.getProduce().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found")));
+        return entries;
+    }
+
+    public boolean isRecipeProducible(long id, int times) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+        return productionService.isRecipeProducible(recipe, buildEntriesMap(recipe), times);
+    }
+
     @Transactional
     public void produceRecipeMultiple(long id, int times) {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
-        recipe.getIngredientAmounts().forEach((ingredient, amount) -> {
-            WarehouseEntry entry = warehouseEntryRepository.findByIngredientId(ingredient.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
-            entry.subtractAmount(amount * times);
-            warehouseEntryRepository.save(entry);
-        });
-        WarehouseEntry produceEntry = warehouseEntryRepository.findByIngredientId(recipe.getProduce().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
-        produceEntry.addAmount(times);
-        warehouseEntryRepository.save(produceEntry);
+        Map<Ingredient, WarehouseEntry> entries = buildEntriesMap(recipe);
+        productionService.produceRecipe(recipe, entries, times);
+        entries.values().forEach(warehouseEntryRepository::save);
     }
 }
