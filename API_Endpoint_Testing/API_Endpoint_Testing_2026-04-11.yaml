@@ -356,6 +356,39 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:8080/ingredients/create
+        name: createIngredient5
+        meta:
+          id: req_e500baa173f441deb64840ffea0e724d
+          created: 1775935083126
+          modified: 1775935128159
+          isPrivate: false
+          description: ""
+          sortKey: -1775750409951.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "multistage",
+            	"picture": "multi.png",
+            	"base": false
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: Versuch
     meta:
       id: fld_6b7cb40443534ce59aab28699c187945
@@ -400,7 +433,7 @@ collection:
         meta:
           id: req_deb3648a71a34050a5a0bfcdcfefabe9
           created: 1775752803955
-          modified: 1775767783834
+          modified: 1775929713651
           isPrivate: false
           description: ""
           sortKey: -1775752855995
@@ -672,6 +705,116 @@ collection:
                 "produceId": 4,
                 "ingredientAmounts": {
                     "1": 2
+                }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/producible/1
+        name: isRecipeProducible
+        meta:
+          id: req_7e28aaf5a038444196d3ef60b7a3e6a8
+          created: 1775929682119
+          modified: 1775929984650
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855445
+        method: GET
+        parameters:
+          - name: times
+            value: "8"
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/required/direct/2
+        name: requiredDirectIngredients
+        meta:
+          id: req_dab149d01c6843fa9579def7e14334b5
+          created: 1775934913693
+          modified: 1775935188045
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855645
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/required/base/2
+        name: requiredBaseIngredients
+        meta:
+          id: req_a1630ab06ba14a7c90c681f168c8d4bf
+          created: 1775934970448
+          modified: 1775935208714
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855620
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/recipes/create
+        name: createRecipe3
+        meta:
+          id: req_83d367e21a194d4fa3218ca02a1c170b
+          created: 1775935040848
+          modified: 1775935164167
+          isPrivate: false
+          description: ""
+          sortKey: -1775752855920
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "name": "multiStage",
+                "produceId": 5,
+                "ingredientAmounts": {
+                    "1": 2,
+            			  "2": 2
                 }
             }
         headers:
