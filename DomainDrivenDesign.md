@@ -80,3 +80,38 @@ nutzen das WarehouseEntryDTO um die Mengen (amounts) zu verwalten.
 Dadurch befinden sich in den API Aufrufen nicht zwei Zahlen (IngredientID und Mengen/amount),
 sondern nur eine, Die IngredientID.
 Eine noch bessere Lösung ist es die IngredientID aus dem DTO zu entnehmen.
+
+## Taktische Muster des DDD
+
+### Aggregate
+
+#### Rezept (Recipe) als Aggregate Root
+Das Rezept ist als Aggregate Root implementiert. Es kontrolliert den gesamten Zugriff auf seine
+Zutaten-Mengen-Zuordnung (ingredientAmounts). Externe Klassen können die Zuordnung nicht
+direkt manipulieren, sondern müssen dies über die Methoden des Rezepts tun:
+
+- addIngredient(ingredient, amount)
+- removeIngredient(ingredient)
+- setIngredientAmount(ingredient, amount)
+
+Dies stellt sicher, dass die Konsistenz der Zutaten-Mengen-Zuordnung stets durch das Rezept
+gewährleistet wird. Die Einträge in ingredientAmounts besitzen keine eigene Identität außerhalb
+des Rezepts — sie existieren nur als Teil des Aggregats.
+
+Beispiel aus dem Source Code:
+```
+// Zugriff nur über Recipe möglich
+recipe.addIngredient(ingredient, amount);  // korrekt
+recipe.ingredientAmounts.put(ingredient, amount);  // nicht möglich, da private
+```
+
+#### Lager (Warehouse)
+Das Lager als Gesamtkonzept besteht aus einzelnen WarehouseEntry Objekten, wobei jeder
+WarehouseEntry die Zutat und ihren Lagerbestand kapselt. Der Zugriff auf Lagerbestände
+erfolgt ausschließlich über die Methoden von WarehouseEntry:
+
+- addAmount(amount)
+- subtractAmount(amount)
+- setAmount(amount)
+
+Diese Methoden stellen sicher dass der Lagerbestand nie unter null sinken kann.
