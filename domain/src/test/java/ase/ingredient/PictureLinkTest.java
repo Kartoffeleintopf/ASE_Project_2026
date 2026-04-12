@@ -32,4 +32,28 @@ class PictureLinkTest {
         PictureLink b = new PictureLink("link");
         assertEquals(a.hashCode(), b.hashCode());
     }
+
+    @Test
+    void getExtension() {
+        PictureLink link = new PictureLink("images/tomato.png");
+        assertEquals(".png", link.getExtension());
+    }
+
+    @Test
+    void getExtensionNoExtension() {
+        PictureLink link = new PictureLink("tomato");
+        assertEquals("", link.getExtension());
+    }
+
+    @Test
+    void getFileName() {
+        PictureLink link = new PictureLink("images/tomato.png");
+        assertEquals("tomato.png", link.getFileName());
+    }
+
+    @Test
+    void getFileNameNoPath() {
+        PictureLink link = new PictureLink("tomato.png");
+        assertEquals("tomato.png", link.getFileName());
+    }
 }
