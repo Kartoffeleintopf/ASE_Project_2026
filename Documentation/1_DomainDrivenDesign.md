@@ -121,7 +121,13 @@ Es gibt die folgenden 3 Repositories:
 ### Value Objects
 
 #### Bildlink (PictureLink)
-Bildlink
+Bildlink ist ein Value Object, da der Bildlink keine eigene Identitaet benoetigt.
+Zwei Bildlink sind also identisch mit derselben url sind identisch, 
+unabhaengig davon zu welcher Zutat sie gehoeren.
+
+Da Bildlink ein Value Object ist, 
+also immutable ist gibt es entsprechend keine setUrl Methode.
+Eine Aenderung erfordert ein neues Objekt.
 
 ### Aggregate
 
@@ -155,3 +161,6 @@ erfolgt ausschließlich ueber die Methoden von WarehouseEntry:
 - setAmount(amount)
 
 Diese Methoden stellen sicher dass der Lagerbestand nie unter null sinken kann.
+
+### Domain Service
+// TODO
