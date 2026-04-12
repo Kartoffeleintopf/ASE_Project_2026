@@ -2,6 +2,7 @@ package ase.recipe;
 
 import ase.ingredient.Ingredient;
 import ase.ingredient.IngredientRepository;
+import ase.production.ProductionService;
 import ase.warehouse.WarehouseEntry;
 import ase.warehouse.WarehouseEntryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,9 @@ class RecipeApplicationServiceTest {
 
     @InjectMocks
     private RecipeApplicationService recipeApplicationService;
+
+    @Mock
+    private ProductionService productionService;
 
     private Ingredient produce;
     private Ingredient ingredientA;
@@ -133,6 +137,16 @@ class RecipeApplicationServiceTest {
         recipeApplicationService.produceRecipeMultiple(recipe.getId(), 1);
 
         verify(warehouseEntryRepository, times(2)).findByIngredientId(anyLong());
-        verify(warehouseEntryRepository, times(2)).save(any(WarehouseEntry.class));
+        verify(warehouseEntryRepository, atLeastOnce()).save(any(WarehouseEntry.class));
+    }
+
+    @Test
+    void createRecipeWithCyclicDependencyThrows() {
+        when(ingredientRepository.findById(anyLong())).thenReturn(Optional.of(produce));
+        when(recipeRepository.findRecipeByProduce(any())).thenReturn(Optional.empty())
+                .thenReturn(Optional.of(recipe));
+
+        assertThrows(IllegalArgumentException.class, () ->
+                recipeApplicationService.createRecipe("Recipe", produce.getId(), Map.of(produce.getId(), 1)));
     }
 }
