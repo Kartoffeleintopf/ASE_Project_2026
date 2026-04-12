@@ -63,16 +63,6 @@ Das Lager enthaelt alle Zutaten jeder Art in den vorhandenen Mengen
 #### Regeln
 - Die zugehoerigen Mengenangaben jeder Zutat duerfen nicht unter null sinken
 
-### Entscheidung ob vererbung
-Soll Ingredient eine Superklasse sein die an BaseIngredient und an RecipeIngredient vererbt.
-Nein
-
-## Produzieren
-Beim API Endpunkte erstellen ist mir aufgefallen,
-dass ein Rezept produzieren und eine herstellbare Zutat produzieren auseinandergehalten werden muss.
-Da beide das selbe Wort (produzieren/produce) verwenden.
-Um diesen Problem bei der API Endpunkte Benennung aus dem Weg zu gehen,
-wird das produzieren eines Rezeptes umbenannt (Ausfuehren/execute).
 
 ## API Endpunkte
 Die API Endpunkte fuer den WarehouseController welche sich mit der Modifikation der Zutatenmengen befassen,
@@ -81,7 +71,17 @@ Dadurch befinden sich in den API Aufrufen nicht zwei Zahlen (IngredientID und Me
 sondern nur eine, Die IngredientID.
 Eine noch bessere Loesung ist es die IngredientID aus dem DTO zu entnehmen.
 
+### Produzieren
+Beim API Endpunkte erstellen ist mir aufgefallen,
+dass ein Rezept produzieren und eine herstellbare Zutat produzieren auseinandergehalten werden muss.
+Da beide das selbe Wort (produzieren/produce) verwenden.
+Um diesen Problem bei der API Endpunkte Benennung aus dem Weg zu gehen,
+wird das produzieren eines Rezeptes umbenannt (Ausfuehren/execute).
+
 ## Taktische Muster des DDD
+
+### Entities
+tbd
 
 ### Aggregate
 
