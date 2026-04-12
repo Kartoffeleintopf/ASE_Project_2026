@@ -75,4 +75,9 @@ public class Ingredient {
     public int hashCode() {
         return Long.hashCode(id);
     }
+
+    @Override
+    public String toString() {
+        return id + ":" + name;
+    }
 }
