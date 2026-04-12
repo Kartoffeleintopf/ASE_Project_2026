@@ -81,7 +81,47 @@ wird das produzieren eines Rezeptes umbenannt (Ausfuehren/execute).
 ## Taktische Muster des DDD
 
 ### Entities
-tbd
+#### Zutat (Ingredient)
+Zutat ist als Entitaet definiert, 
+jede Zutat besitzt eine eigene Identitaet welche durch ihre id gekennzeichnet ist.
+Dies wird durch den Ueberschrieb der equals() Methode sichergestellt:
+
+```
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Ingredient)) return false;
+    Ingredient other = (Ingredient) o;
+    return this.id == other.id;
+}
+```
+
+#### Rezept (Recipe)
+Recipe ist ebenfalls als Entitaet implementiert, 
+genau wie die Zutat besitzt auch jedes Rezeot eine id.
+
+#### Lagereintrag (WarehouseEntry)
+Der Lagereintrag verwaltet die Anzahlen der vorhandenen Zutaten, 
+daher jede erstellte Zutat erhaelt auch einen Eintrag welcher initial immer die Anzahl 0 enthaelt.
+Der Lagereintrag ist ebenfalls eine Entitaet, mit eigener id.
+
+### Repositories
+Repositories abstrahieren den Zugriff auf die Datenbank 
+und stellen eine Sammlung von Methoden bereit, 
+zur Interaktion mit dieser.
+
+Neben den Standard CRUD-Operationen (CREATE, READ, UPDATE, DELETE), 
+koennen auch selbst Methoden definiert werden welche von JPA in die entsprechenden Datenbankzugriffe umgewnadelt werden.
+
+Es gibt die folgenden 3 Repositories:
+- IngredientRepository
+- RecipeRepository
+- WarehouseEntryRepository
+
+### Value Objects
+
+#### Bildlink (PictureLink)
+Bildlink
 
 ### Aggregate
 
