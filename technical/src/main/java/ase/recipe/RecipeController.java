@@ -5,6 +5,7 @@ import ase.ingredient.IngredientApplicationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -12,12 +13,10 @@ import java.util.Optional;
 public class RecipeController {
 
     private final RecipeApplicationService recipeApplicationService;
-    private final IngredientApplicationService ingredientApplicationService;
 
     public RecipeController(RecipeApplicationService recipeApplicationService,
                             IngredientApplicationService ingredientApplicationService) {
         this.recipeApplicationService = recipeApplicationService;
-        this.ingredientApplicationService = ingredientApplicationService;
     }
 
     @PostMapping("/create")
@@ -41,12 +40,12 @@ public class RecipeController {
     }
 
     @GetMapping("/required/direct/{id}")
-    public List<Ingredient> requiredDirectIngredients(@PathVariable long id) {
+    public Map<Ingredient, Integer> requiredDirectIngredients(@PathVariable long id) {
         return recipeApplicationService.getDirectIngredients(id);
     }
 
     @GetMapping("/required/base/{id}")
-    public List<Ingredient> requiredBaseIngredients(@PathVariable long id) {
+    public Map<Ingredient, Integer> requiredBaseIngredients(@PathVariable long id) {
         return recipeApplicationService.getBaseIngredients(id);
     }
 

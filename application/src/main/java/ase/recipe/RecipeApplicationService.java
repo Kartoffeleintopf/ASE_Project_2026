@@ -168,27 +168,29 @@ public class RecipeApplicationService {
         entries.values().forEach(warehouseEntryRepository::save);
     }
 
-    public List<Ingredient> getDirectIngredients(long recipeId) {
+    public Map<Ingredient, Integer> getDirectIngredients(long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
-        return productionService.getDirectIngredients(recipe);
+        return recipe.getIngredientAmounts();
     }
 
-    public List<Ingredient> getBaseIngredients(long recipeId) {
+    public Map<Ingredient, Integer> getBaseIngredients(long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
-        List<Ingredient> baseIngredients = new ArrayList<>();
-        collectBaseIngredients(recipe, baseIngredients);
+        Map<Ingredient, Integer> baseIngredients = new HashMap<>();
+        collectBaseIngredients(recipe, baseIngredients, 1);
         return baseIngredients;
     }
 
-    private void collectBaseIngredients(Recipe recipe, List<Ingredient> baseIngredients) {
-        for (Ingredient ingredient : recipe.getIngredientAmounts().keySet()) {
+    private void collectBaseIngredients(Recipe recipe, Map<Ingredient, Integer> baseIngredients, int multiplier) {
+        for (Map.Entry<Ingredient, Integer> entry : recipe.getIngredientAmounts().entrySet()) {
+            Ingredient ingredient = entry.getKey();
+            int amount = entry.getValue() * multiplier;
             Optional<Recipe> subRecipe = recipeRepository.findRecipeByProduce(ingredient);
             if (subRecipe.isEmpty() || ingredient.isBase()) {
-                baseIngredients.add(ingredient);
+                baseIngredients.merge(ingredient, amount, Integer::sum);
             } else {
-                collectBaseIngredients(subRecipe.get(), baseIngredients);
+                collectBaseIngredients(subRecipe.get(), baseIngredients, amount);
             }
         }
     }
