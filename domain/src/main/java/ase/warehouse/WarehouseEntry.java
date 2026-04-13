@@ -23,9 +23,13 @@ public class WarehouseEntry {
         this.amount = 0;
     }
 
-    public Ingredient getIngredient() { return ingredient; }
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
 
-    public int getAmount() { return amount; }
+    public int getAmount() {
+        return amount;
+    }
 
     public void setAmount(int amount) {
         if (amount < 0) {
