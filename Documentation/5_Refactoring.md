@@ -2,10 +2,7 @@
 
 ## Code Smells
 
-smells like code in here
-//TODO
-
-#### Duplizierter Code — buildEntriesMap in RecipeApplicationService
+#### Duplizierter Code - buildEntriesMap in RecipeApplicationService
 Die Logik zum Aufbau der Zutaten-Lagerbestands-Zuordnung (Map<Ingredient, WarehouseEntry>)
 war sowohl in produceRecipeMultiple als auch in isRecipeProducible dupliziert.
 Beide Methoden enthielten denselben Code zum Abrufen der Lagerbestaende fuer jede Zutat im Rezept.
@@ -49,7 +46,7 @@ public void setAmount(int amount) {
     }
 ```
 
-#### LayerDurchbruch — IngredientController
+#### LayerDurchbruch - IngredientController
 Der urspruengliche IngredientController griff direkt auf das IngredientRepository zu,
 anstatt die Geschaeftslogik ueber den IngredientApplicationService abzuwickeln.
 ```java
@@ -71,7 +68,7 @@ Die Geschaeftslogik wurde in den IngredientApplicationService verschoben.
 Der Controller ist nun ausschließlich fuer die HTTP-Kommunikation zustaendig,
 waehrend der Service die fachliche Logik kapselt.
 
-#### Unangemessene Naehe — Recipe.setProduce
+#### Unangemessene Naehe - Recipe.setProduce
 Die Methode setProduce in der Recipe Klasse griff direkt auf den internen Zustand
 von Ingredient zu, indem sie produce.setRecipe(this) aufrief. Dies fuehrte zu einer
 engen Kopplung zwischen Recipe und Ingredient sowie zu zirkulaeren JSON-Referenzen
@@ -95,3 +92,5 @@ Die Rueckreferenz von Ingredient zu Recipe wurde entfernt, da sie zu zirkulaeren
 Abhaengigkeiten bei der JSON-Serialisierung fuehrte. Der Zugriff auf das Rezept
 einer Zutat erfolgt nun ausschließlich ueber das RecipeRepository mittels
 findRecipeByProduce(ingredient).
+
+#### TODO
