@@ -13,6 +13,12 @@ class PictureLinkTest {
     }
 
     @Test
+    void getUrlEmpty() {
+        PictureLink pictureLink = new PictureLink("");
+        assertEquals("", pictureLink.getUrl());
+    }
+
+    @Test
     void pictureLinkEquality() {
         PictureLink a = new PictureLink("www.link.net");
         PictureLink b = new PictureLink("www.link.net");
