@@ -3,6 +3,7 @@
 ## Code Smells
 
 #### Duplizierter Code - buildEntriesMap in RecipeApplicationService
+##### commit: [71e52b6](https://github.com/Kartoffeleintopf/ASE_Project_2026/commit/71e52b67f2a60b75669e9d6bef94220bf5858868)
 Die Logik zum Aufbau der Zutaten-Lagerbestands-Zuordnung (Map<Ingredient, WarehouseEntry>)
 war sowohl in produceRecipeMultiple als auch in isRecipeProducible dupliziert.
 Beide Methoden enthielten denselben Code zum Abrufen der Lagerbestaende fuer jede Zutat im Rezept.
@@ -30,6 +31,8 @@ Duplizierte Code wurde hier also durch eine extra Methode verhindert,
 ein anderes Refactoring welches gern genutzt wurde,
 ist aehnliche Methoden durch allgemeinere Versionen durchzuleiten.
 Ein Beispiel aus WarehouseEntry.java:
+#### commit: [81bfb2b](https://github.com/Kartoffeleintopf/ASE_Project_2026/commit/81bfb2bbe7d1d5b3379bbd4e3d0125c2207f6a55)
+
 ```java
 public void setAmount(int amount) {
         if (amount < 0) {
@@ -47,6 +50,7 @@ public void setAmount(int amount) {
 ```
 
 #### LayerDurchbruch - IngredientController
+##### commit: [ecc4109](https://github.com/Kartoffeleintopf/ASE_Project_2026/commit/ecc4109d853ddb1af533b89dbad0cb4fc0ff8f06)
 Der urspruengliche IngredientController griff direkt auf das IngredientRepository zu,
 anstatt die Geschaeftslogik ueber den IngredientApplicationService abzuwickeln.
 ```java
@@ -69,6 +73,7 @@ Der Controller ist nun ausschließlich fuer die HTTP-Kommunikation zustaendig,
 waehrend der Service die fachliche Logik kapselt.
 
 #### Unangemessene Naehe - Recipe.setProduce
+##### commit: [e8ba0b0](https://github.com/Kartoffeleintopf/ASE_Project_2026/commit/e8ba0b05cf1b2fc197e686d5aee60506e0b96a4f)
 Die Methode setProduce in der Recipe Klasse griff direkt auf den internen Zustand
 von Ingredient zu, indem sie produce.setRecipe(this) aufrief. Dies fuehrte zu einer
 engen Kopplung zwischen Recipe und Ingredient sowie zu zirkulaeren JSON-Referenzen
@@ -94,6 +99,9 @@ einer Zutat erfolgt nun ausschließlich ueber das RecipeRepository mittels
 findRecipeByProduce(ingredient).
 
 #### Magic Strings - Fehlermeldungen
+##### commit: [60ad36e](https://github.com/Kartoffeleintopf/ASE_Project_2026/commit/60ad36e4d6dce72641c1507a8c36e16fcfa31510)
+##### commit: [384b9ea](https://github.com/Kartoffeleintopf/ASE_Project_2026/commit/384b9eadffecf6343e38e74ba7ae1a6d15513e2f)
+##### commit: [95bda63](https://github.com/Kartoffeleintopf/ASE_Project_2026/commit/95bda63543e6178a59cc0a40ebceb35231c43bdb)
 
 Waehrend der Entwicklung wurden Fehlermeldungen als hartcodierte Strings direkt an den Fehlerquellen platziert.
 
