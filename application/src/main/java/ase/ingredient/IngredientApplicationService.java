@@ -1,5 +1,6 @@
 package ase.ingredient;
 
+import ase.ErrorMessages;
 import ase.recipe.Recipe;
 import ase.warehouse.WarehouseEntry;
 import ase.warehouse.WarehouseEntryRepository;
@@ -35,7 +36,7 @@ public class IngredientApplicationService {
     @Transactional
     public Ingredient updateIngredient(long id, String name, String picture) {
         Ingredient ingredient = ingredientRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
         ingredient.setName(name);
         ingredient.setPicture(picture);
         return ingredientRepository.save(ingredient);
@@ -45,15 +46,15 @@ public class IngredientApplicationService {
     public void deleteIngredient(long id) {
         // Does it exist?
         Ingredient ingredient =  ingredientRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
         // Is it produced by a recipe?
         if (!(ingredient.isBase()) && recipeRepository.findRecipeByProduce(ingredient).isPresent()) {
-            throw new IllegalArgumentException("Cannot delete ingredient produced by a recipe");
+            throw new IllegalArgumentException(ErrorMessages.CANNOT_DELETE_INGREDIENT_PRODUCED_BY_RECIPE.getMessage());
         }
         // Is it used in a recipe?
         for (Recipe recipe : recipeRepository.findAll()) {
             if (recipe.containsIngredient(ingredient)) {
-                throw new IllegalArgumentException("Cannot delete ingredient contained in a recipe");
+                throw new IllegalArgumentException(ErrorMessages.CANNOT_DELETE_INGREDIENT_CONTAINED_IN_RECIPE.getMessage());
             }
         }
         warehouseEntryRepository.deleteByIngredientId(id);

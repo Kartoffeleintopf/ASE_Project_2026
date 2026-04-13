@@ -1,5 +1,6 @@
 package ase.production;
 
+import ase.ErrorMessages;
 import ase.ingredient.Ingredient;
 import ase.recipe.Recipe;
 import ase.warehouse.WarehouseEntry;
@@ -23,7 +24,7 @@ public class ProductionService {
 
     public void produceRecipe(Recipe recipe, Map<Ingredient, WarehouseEntry> entries, int times) {
         if (!isRecipeProducible(recipe, entries, times)) {
-            throw new IllegalArgumentException("Recipe is not producible");
+            throw new IllegalArgumentException(ErrorMessages.INSUFFICIENT_STOCK.getMessage());
         }
         recipe.getIngredientAmounts().forEach((ingredient, amount) ->
                 entries.get(ingredient).subtractAmount(amount * times));

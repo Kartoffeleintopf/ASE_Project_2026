@@ -1,5 +1,6 @@
 package ase.recipe;
 
+import ase.ErrorMessages;
 import ase.ingredient.Ingredient;
 import ase.ingredient.IngredientRepository;
 import ase.production.ProductionService;
@@ -32,19 +33,20 @@ public class RecipeApplicationService {
     @Transactional
     public Recipe createRecipe(String name, long produceId, Map<Long, Integer> ingredientAmounts) {
         Ingredient produce = ingredientRepository.findById(produceId)
-                .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
         if (produce.isBase()) {
-            throw new IllegalStateException("Cannot create recipe for a base ingredient");
+            throw new IllegalStateException(ErrorMessages.INGREDIENT_IS_BASE.getMessage());
+
         }
         if (recipeRepository.findRecipeByProduce(produce).isPresent()) {
-            throw new IllegalArgumentException("Ingredient already has a recipe");
+            throw new IllegalArgumentException(ErrorMessages.INGREDIENT_ALREADY_HAS_RECIPE.getMessage());
         }
         RecipeBuilder builder = new RecipeBuilder(name, produce);
         ingredientAmounts.forEach((ingredientId, amount) -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId)
-                    .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+                    .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
             if (ingredientRequiresSelf(produce, ingredient)) {
-                throw new IllegalArgumentException("Recipe would create a cyclic dependency");
+                throw new IllegalArgumentException(ErrorMessages.REQUIRED_SELF.getMessage());
             }
             builder.addIngredient(ingredient, amount);
         });
@@ -73,13 +75,13 @@ public class RecipeApplicationService {
 
     public Recipe findRecipeById(long id) {
         return recipeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
     }
 
     public Optional<Recipe> findByProduceID(long id) {
         return recipeRepository.findRecipeByProduce(
                 ingredientRepository.findById(id)
-                        .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"))
+                        .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()))
         );
     }
 
@@ -97,17 +99,17 @@ public class RecipeApplicationService {
                                String name,
                                Map<Long, Integer> ingredientAmounts) {
         Recipe recipe = recipeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
         recipe.setName(name);
 
         if (recipe.getProduce().getId() != produceId) {
             Ingredient newProduce = ingredientRepository.findById(produceId)
-                    .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+                    .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
             if (newProduce.isBase()) {
-                throw new IllegalStateException("Cannot assign a base ingredient as produce");
+                throw new IllegalStateException(ErrorMessages.CANNOT_ASSIGN_BASE_AS_PRODUCE.getMessage());
             }
             if (recipeRepository.findRecipeByProduce(newProduce).isPresent()) {
-                throw new IllegalStateException("Ingredient already has a recipe");
+                throw new IllegalStateException(ErrorMessages.INGREDIENT_ALREADY_HAS_RECIPE.getMessage());
             }
             recipe.setProduce(newProduce);
         }
@@ -115,9 +117,9 @@ public class RecipeApplicationService {
         recipe.getIngredientAmounts().clear();
         ingredientAmounts.forEach((ingredientId, amount) -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId)
-                    .orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+                    .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
             if (ingredientRequiresSelf(recipe.getProduce(), ingredient)) {
-                throw new IllegalArgumentException("Recipe contains ingredient it will produce --> cyclic dependency");
+                throw new IllegalArgumentException(ErrorMessages.REQUIRED_SELF.getMessage());
             }
             recipe.addIngredient(ingredient, amount);
         });
@@ -127,7 +129,7 @@ public class RecipeApplicationService {
     @Transactional
     public void deleteRecipe(long id) {
         Recipe recipe = recipeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
         Ingredient produce = recipe.getProduce();
         //produce.setRecipe(null);
         ingredientRepository.save(produce);
@@ -145,24 +147,24 @@ public class RecipeApplicationService {
         Map<Ingredient, WarehouseEntry> entries = new HashMap<>();
         recipe.getIngredientAmounts().keySet().forEach(ingredient -> {
             WarehouseEntry entry = warehouseEntryRepository.findByIngredientId(ingredient.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
+                    .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.WAREHOUSE_ENTRY_NOT_FOUND.getMessage()));
             entries.put(ingredient, entry);
         });
         entries.put(recipe.getProduce(), warehouseEntryRepository.findByIngredientId(recipe.getProduce().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found")));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.WAREHOUSE_ENTRY_NOT_FOUND.getMessage())));
         return entries;
     }
 
     public boolean isRecipeProducible(long id, int times) {
         Recipe recipe = recipeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
         return productionService.isRecipeProducible(recipe, buildEntriesMap(recipe), times);
     }
 
     @Transactional
     public void produceRecipeMultiple(long id, int times) {
         Recipe recipe = recipeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
         Map<Ingredient, WarehouseEntry> entries = buildEntriesMap(recipe);
         productionService.produceRecipe(recipe, entries, times);
         entries.values().forEach(warehouseEntryRepository::save);
@@ -170,13 +172,13 @@ public class RecipeApplicationService {
 
     public Map<Ingredient, Integer> getDirectIngredients(long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
         return recipe.getIngredientAmounts();
     }
 
     public Map<Ingredient, Integer> getBaseIngredients(long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
         Map<Ingredient, Integer> baseIngredients = new HashMap<>();
         collectBaseIngredients(recipe, baseIngredients, 1);
         return baseIngredients;
