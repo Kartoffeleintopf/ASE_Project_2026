@@ -62,36 +62,40 @@ public class RecipeApplicationService {
     // Read
 
     @Transactional
-    public Recipe updateRecipe(long id,
-                               long produceId,
-                               String name,
-                               Map<Long, Integer> ingredientAmounts) {
+    public Recipe updateRecipe(long id, long produceId, String name, Map<Long, Integer> ingredientAmounts) {
         Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
-        recipe.setName(name);
 
+        //recipe.setName(name);
+        Ingredient newProduce;
         if (recipe.getProduce().getId() != produceId) {
-            Ingredient newProduce = ingredientRepository.findById(produceId)
+            newProduce = ingredientRepository.findById(produceId)
                     .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
+
             if (newProduce.isBase()) {
                 throw new IllegalStateException(ErrorMessages.CANNOT_ASSIGN_BASE_AS_PRODUCE.getMessage());
             }
             if (recipeRepository.findRecipeByProduce(newProduce).isPresent()) {
                 throw new IllegalStateException(ErrorMessages.INGREDIENT_ALREADY_HAS_RECIPE.getMessage());
             }
-            recipe.setProduce(newProduce);
         }
+        else  {
+            newProduce = recipe.getProduce();
+        }
+        final RecipeBuilder recipeBuilder = new RecipeBuilder(name, newProduce);
 
-        recipe.getIngredientAmounts().clear();
+        //recipe.getIngredientAmounts().clear();
+
         ingredientAmounts.forEach((ingredientId, amount) -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId)
                     .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
             if (ingredientRequiresSelf(recipe.getProduce(), ingredient)) {
                 throw new IllegalArgumentException(ErrorMessages.REQUIRED_SELF.getMessage());
             }
-            recipe.addIngredient(ingredient, amount);
+            recipeBuilder.addIngredient(ingredient, amount);
         });
-        return recipeRepository.save(recipe);
+        Recipe newRecipe = recipeBuilder.build();
+        return recipeRepository.save(newRecipe);
     }
 
     @Transactional
