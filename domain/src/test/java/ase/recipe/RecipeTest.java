@@ -13,7 +13,6 @@ class RecipeTest {
 
     private Ingredient produce;
     private Ingredient ingredientA;
-    private Ingredient ingredientB;
     private Recipe recipe;
     private Map<Ingredient, Integer> ingredientAmounts;
 
@@ -21,10 +20,14 @@ class RecipeTest {
     void setUp() {
         produce = new Ingredient("Sauce", "link", false);
         ingredientA = new Ingredient("Tomato", "link", true);
-        ingredientB = new Ingredient("Salt", "link", true);
         recipe = new Recipe("Tomato Sauce", produce);
         ingredientAmounts = new HashMap<>();
         ingredientAmounts.put(ingredientA, 10);
+    }
+
+    @Test
+    void assertDefaultId() {
+        assertEquals(0, recipe.getId());
     }
 
     @Test
