@@ -1,5 +1,6 @@
 package ase.warehouse;
 
+import ase.ErrorMessages;
 import ase.ingredient.Ingredient;
 import jakarta.persistence.*;
 
@@ -33,7 +34,7 @@ public class WarehouseEntry {
 
     public void setAmount(int amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Stored amount cannot be negative!");
+            throw new IllegalArgumentException(ErrorMessages.STORED_AMOUNT_NEGATIVE.getMessage());
         }
         this.amount = amount; }
 

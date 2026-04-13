@@ -93,4 +93,45 @@ Abhaengigkeiten bei der JSON-Serialisierung fuehrte. Der Zugriff auf das Rezept
 einer Zutat erfolgt nun ausschließlich ueber das RecipeRepository mittels
 findRecipeByProduce(ingredient).
 
-#### TODO
+#### Magic Strings - Fehlermeldungen
+
+Waehrend der Entwicklung wurden Fehlermeldungen als hartcodierte Strings direkt an den Fehlerquellen platziert.
+
+```
+.orElseThrow(() -> new IllegalArgumentException("Ingredient not found"));
+// taucht mehrfach auf in IngredientApplicationService und anderen.
+```
+Dieselben Strings sind ueber mehrere Klassen verteilt.
+Eine Aenderung einer Fehlermeldung erfordert das Auffinden
+und Aktualisieren jedes einzelnen Vorkommens, was fehleranfaellig und mühsam ist.
+
+Refactoring: Extract Constant
+Die Fehlermeldungen wurden in ein zentrales Enum ErrorMessages im Domain Layer extrahiert:
+
+```java
+public enum ErrorMessages {
+    INGREDIENT_NOT_FOUND("Ingredient not found"),
+    // ...
+    INSUFFICIENT_STOCK("Insufficient stock to produce recipe");
+
+    private final String message;
+
+    ErrorMessages(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+}
+```
+
+Die Verwendung erfolgt nun einheitlich in allen Klassen:
+```
+.orElseThrow(() -> new IllegalArgumentException(
+    ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()));
+```
+
+Das Enum liegt im Domain Layer, da es von allen Schichten verwendet wird
+und somit ueber die bestehende Abhaengigkeitskette erreichbar ist.
+Aenderungen an Fehlermeldungen muessen nun nur noch an einer einzigen Stelle vorgenommen werden.
