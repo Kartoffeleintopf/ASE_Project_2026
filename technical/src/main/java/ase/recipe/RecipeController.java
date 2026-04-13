@@ -2,7 +2,6 @@ package ase.recipe;
 
 import ase.ErrorMessages;
 import ase.ingredient.Ingredient;
-import ase.ingredient.IngredientApplicationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +14,7 @@ public class RecipeController {
 
     private final RecipeApplicationService recipeApplicationService;
 
-    public RecipeController(RecipeApplicationService recipeApplicationService,
-                            IngredientApplicationService ingredientApplicationService) {
+    public RecipeController(RecipeApplicationService recipeApplicationService) {
         this.recipeApplicationService = recipeApplicationService;
     }
 
