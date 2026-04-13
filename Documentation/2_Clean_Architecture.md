@@ -61,19 +61,19 @@ Dies wird durch die Maven-Modulstruktur erzwungen:
 
 Die Schichtarchitektur wurde gewaehlt weil:
 
-- **Unabhaengigkeit der Domaenenlogik** — Die Geschaeftslogik im Domain Layer ist
+- **Unabhaengigkeit der Domaenenlogik** - Die Geschaeftslogik im Domain Layer ist
   vollstaendig unabhaengig von Spring Boot, JPA oder anderen Frameworks.
   Sie koennte theoretisch mit einer anderen Infrastruktur verwendet werden.
 
-- **Testbarkeit** — Jede Schicht kann unabhaengig getestet werden.
+- **Testbarkeit** - Jede Schicht kann unabhaengig getestet werden.
   Domain Layer Tests benoetigen keine Datenbank oder Spring Context.
   Application Layer Tests verwenden Mocks fuer die Repositories.
 
-- **Wartbarkeit** — Aenderungen in der Technical Layer (z.B. ein Controller)
+- **Wartbarkeit** - Aenderungen in der Technical Layer (z.B. ein Controller)
   beeinflussen den Domain Layer nicht. Aenderungen in der Datenbankstruktur
   beeinflussen die Geschaeftslogik nicht.
 
-- **Single Responsibility** — Jede Schicht hat eine klar definierte Aufgabe:
+- **Single Responsibility** - Jede Schicht hat eine klar definierte Aufgabe:
   Domain Layer definiert was die Anwendung tut,
   Application Layer orchestriert wie es getan wird,
   Technical Layer bestimmt womit es getan wird.
