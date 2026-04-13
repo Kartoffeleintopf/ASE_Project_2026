@@ -135,3 +135,17 @@ Die Verwendung erfolgt nun einheitlich in allen Klassen:
 Das Enum liegt im Domain Layer, da es von allen Schichten verwendet wird
 und somit ueber die bestehende Abhaengigkeitskette erreichbar ist.
 Aenderungen an Fehlermeldungen muessen nun nur noch an einer einzigen Stelle vorgenommen werden.
+
+#### Grosse Klasse (Large Class) - RecipeApplicationService
+RecipeApplicationService ist im Laufe der Entwicklung gewachsen und uebernimmt
+mehrere Verantwortlichkeiten:
+- CRUD Operationen fuer Rezepte
+- FIND Operationen, (Anfragen an die Datenbank)
+- Orchestrierung der Produktion via ProductionService und Checks diesbezueglich
+
+Die Klasse hat zu viele Verantwortlichkeiten und koennte in kleinere, spezialisierte Klassen aufgeteilt werden.
+Zum Beispiel koennten die CRUD Operationen in ein RecipeApplicationServiceCRUD extrahiert werden.
+
+Dieses Refactoring wurde versucht, allerdings war es mit zu vielen Problemen verbunden.
+Und hat unnoetig viel sehr aehnlichen Code erzeugt was gegen das DRY Prinzip verstoesst.
+Stattdessen wurden Kommentare hinzugefuegt welche die Abschnitte CRUD, FIND und PROD markieren.
