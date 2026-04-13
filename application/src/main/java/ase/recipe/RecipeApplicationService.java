@@ -30,6 +30,8 @@ public class RecipeApplicationService {
         this.productionService = productionService;
     }
 
+    // CRUD
+
     @Transactional
     public Recipe createRecipe(String name, long produceId, Map<Long, Integer> ingredientAmounts) {
         Ingredient produce = ingredientRepository.findById(produceId)
@@ -57,41 +59,7 @@ public class RecipeApplicationService {
         return recipe;
     }
 
-    private boolean ingredientRequiresSelf(Ingredient produce, Ingredient ingredient) {
-        if (ingredient.equals(produce)) {
-            return true;
-        }
-        Optional<Recipe> subRecipe = recipeRepository.findRecipeByProduce(ingredient);
-        if (subRecipe.isEmpty()) {
-            return false;
-        }
-        for (Ingredient subIngredient : subRecipe.get().getIngredientAmounts().keySet()) {
-            if (ingredientRequiresSelf(produce, subIngredient)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Recipe findRecipeById(long id) {
-        return recipeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
-    }
-
-    public Optional<Recipe> findByProduceID(long id) {
-        return recipeRepository.findRecipeByProduce(
-                ingredientRepository.findById(id)
-                        .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()))
-        );
-    }
-
-    public List<Recipe> findAllRecipes() {
-        return recipeRepository.findAll();
-    }
-
-    public List<Recipe> findByNameContaining(String name) {
-        return recipeRepository.findByNameContaining(name);
-    }
+    // Read
 
     @Transactional
     public Recipe updateRecipe(long id,
@@ -134,6 +102,46 @@ public class RecipeApplicationService {
         //produce.setRecipe(null);
         ingredientRepository.save(produce);
         recipeRepository.delete(recipe);
+    }
+
+    //FIND
+
+    public Recipe findRecipeById(long id) {
+        return recipeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
+    }
+
+    public Optional<Recipe> findByProduceID(long id) {
+        return recipeRepository.findRecipeByProduce(
+                ingredientRepository.findById(id)
+                        .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.INGREDIENT_NOT_FOUND.getMessage()))
+        );
+    }
+
+    public List<Recipe> findAllRecipes() {
+        return recipeRepository.findAll();
+    }
+
+    public List<Recipe> findByNameContaining(String name) {
+        return recipeRepository.findByNameContaining(name);
+    }
+
+    // PROD
+
+    private boolean ingredientRequiresSelf(Ingredient produce, Ingredient ingredient) {
+        if (ingredient.equals(produce)) {
+            return true;
+        }
+        Optional<Recipe> subRecipe = recipeRepository.findRecipeByProduce(ingredient);
+        if (subRecipe.isEmpty()) {
+            return false;
+        }
+        for (Ingredient subIngredient : subRecipe.get().getIngredientAmounts().keySet()) {
+            if (ingredientRequiresSelf(produce, subIngredient)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*
