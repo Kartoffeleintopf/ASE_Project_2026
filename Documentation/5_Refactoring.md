@@ -10,7 +10,7 @@ Die duplizierte Logik wurde in die private Hilfsmethode buildEntriesMap extrahie
 welche von beiden Methoden aufgerufen wird. Dies reduziert die Codeduplizierung und
 stellt sicher, dass Aenderungen an der Logik nur an einer Stelle vorgenommen werden muessen.
 
-```
+```java
 private Map<Ingredient, WarehouseEntry> buildEntriesMap(Recipe recipe) {
     Map<Ingredient, WarehouseEntry> entries = new HashMap<>();
     recipe.getIngredientAmounts().keySet().forEach(ingredient -> {
@@ -28,7 +28,7 @@ Duplizierte Code wurde hier also durch eine extra Methode verhindert,
 ein anderes Refactoring welches gern genutzt wurde,
 ist aehnliche Methoden durch allgemeinere Versionen durchzuleiten.
 Ein Beispiel aus WarehouseEntry.java:
-```
+```java
 public void setAmount(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Stored amount cannot be negative!");
@@ -47,7 +47,7 @@ public void setAmount(int amount) {
 #### LayerDurchbruch — IngredientController
 Der urspruengliche IngredientController griff direkt auf das IngredientRepository zu,
 anstatt die Geschaeftslogik ueber den IngredientApplicationService abzuwickeln.
-```
+```java
 // Vorher - Controller greift direkt auf Repository zu
 @PostMapping
 public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
@@ -71,7 +71,7 @@ Die Methode setProduce in der Recipe Klasse griff direkt auf den internen Zustan
 von Ingredient zu, indem sie produce.setRecipe(this) aufrief. Dies fuehrte zu einer
 engen Kopplung zwischen Recipe und Ingredient sowie zu zirkulaeren JSON-Referenzen
 bei der Serialisierung, welche beim Testen der Endpunkte auffiel.
-```
+```java
 // Vorher - Recipe greift in den internen Zustand von Ingredient ein
 public void setProduce(Ingredient produce) {
     this.produce = produce;
