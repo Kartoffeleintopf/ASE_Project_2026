@@ -31,7 +31,8 @@ public class ProductionService {
         entries.get(recipe.getProduce()).addAmount(times);
     }
 
+    /*
     public List<Ingredient> getDirectIngredients(Recipe recipe) {
         return new ArrayList<>(recipe.getIngredientAmounts().keySet());
-    }
+    }*/
 }
