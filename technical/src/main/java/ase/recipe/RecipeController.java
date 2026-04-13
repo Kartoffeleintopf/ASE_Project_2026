@@ -1,5 +1,6 @@
 package ase.recipe;
 
+import ase.ErrorMessages;
 import ase.ingredient.Ingredient;
 import ase.ingredient.IngredientApplicationService;
 import org.springframework.web.bind.annotation.*;
@@ -78,7 +79,7 @@ public class RecipeController {
     @PostMapping("/produce/{ingredientId}")
     public void produceIngredient(@PathVariable long ingredientId) {
         Recipe recipe = recipeApplicationService.findByProduceID(ingredientId)
-                .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.RECIPE_NOT_FOUND.getMessage()));
         produceMultiple(recipe.getId(), 1);
     }
 
