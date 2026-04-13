@@ -1,5 +1,6 @@
 package ase.warehouse;
 
+import ase.ErrorMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,12 +42,12 @@ public class WarehouseApplicationService {
 
     public WarehouseEntry findByIngredientID(long ingredientID) {
         return warehouseEntryRepository.findByIngredientId(ingredientID)
-                .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.WAREHOUSE_ENTRY_NOT_FOUND.getMessage()));
     }
 
     public WarehouseEntry findEntryByID(Long id) {
         return warehouseEntryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Warehouse entry not found"));
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessages.WAREHOUSE_ENTRY_NOT_FOUND.getMessage()));
     }
 
     @Transactional
