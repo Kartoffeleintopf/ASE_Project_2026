@@ -9,11 +9,24 @@ class IngredientTest {
 
     private Ingredient baseIngredient;
     private Ingredient nonBaseIngredient;
+    private Ingredient emptyIngredient;
 
     @BeforeEach
     void setUp() {
         baseIngredient = new Ingredient("Tomato", "link", true);
         nonBaseIngredient = new Ingredient("Sauce", "link2", false);
+        emptyIngredient = new Ingredient("", "", true);
+    }
+
+    @Test
+    void assertDefaultId() {
+        assertEquals(0, baseIngredient.getId());
+        assertEquals(0, nonBaseIngredient.getId());
+    }
+
+    @Test
+    void getNameEmpty() {
+        assertEquals("", emptyIngredient.getName());
     }
 
     @Test
@@ -25,6 +38,11 @@ class IngredientTest {
     void setName() {
         baseIngredient.setName("Potato");
         assertEquals("Potato", baseIngredient.getName());
+    }
+
+    @Test
+    void getPictureEmpty() {
+        assertEquals("", emptyIngredient.getPicture());
     }
 
     @Test
@@ -71,5 +89,15 @@ class IngredientTest {
     void hashCodeConsistentWithEquals() {
         Ingredient other = new Ingredient("Tomato", "link", true);
         assertEquals(baseIngredient.hashCode(), other.hashCode());
+    }
+
+    @Test
+    void toStringEmpty() {
+        assertEquals(emptyIngredient.getId() + ":" + emptyIngredient.getName(), emptyIngredient.toString());
+    }
+
+    @Test
+    void toStringSame() {
+        assertEquals(baseIngredient.getId() + ":" + baseIngredient.getName(), baseIngredient.toString());
     }
 }
