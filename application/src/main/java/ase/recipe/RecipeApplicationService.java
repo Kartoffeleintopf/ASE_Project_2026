@@ -148,13 +148,6 @@ public class RecipeApplicationService {
         return false;
     }
 
-    /*
-    @Transactional
-    public void produceRecipe(long id) {
-        produceRecipeMultiple(id, 1);
-    }
-    */
-
     private Map<Ingredient, WarehouseEntry> buildEntriesMap(Recipe recipe) {
         Map<Ingredient, WarehouseEntry> entries = new HashMap<>();
         recipe.getIngredientAmounts().keySet().forEach(ingredient -> {
@@ -208,4 +201,10 @@ public class RecipeApplicationService {
             }
         }
     }
+    /*
+    @Transactional
+    public void produceRecipe(long id) {
+        produceRecipeMultiple(id, 1);
+    }
+    */
 }
