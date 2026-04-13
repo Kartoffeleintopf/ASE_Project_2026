@@ -44,12 +44,7 @@ Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produkti
 - Bitte lege die Datenbank zeitnah fest (z. B. PostgreSQL oder SQLite). „tbd“ ist nicht schlimm, aber du solltest früh eine Entscheidung treffen, um Modellierung und Persistenz konsistent umzusetzen.
 --> MariaDB, JPA
 
-## ToDO
-- Unit Tests
-- the entire logic
-- everything really
-
-## temporary Documentation
+## Documentation
 - run the project using the run.sh script, if the process to run the programm should change, how its run doesn't abstracted away via the script
 ```
 ./run.sh
