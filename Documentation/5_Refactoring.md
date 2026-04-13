@@ -1,5 +1,10 @@
 # 5 Refactoring
 
+## Code Smells
+
+smells like code in here
+//TODO
+
 #### Duplizierter Code — buildEntriesMap in RecipeApplicationService
 Die Logik zum Aufbau der Zutaten-Lagerbestands-Zuordnung (Map<Ingredient, WarehouseEntry>)
 war sowohl in produceRecipeMultiple als auch in isRecipeProducible dupliziert.
