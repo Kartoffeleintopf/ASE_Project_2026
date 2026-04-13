@@ -45,11 +45,30 @@ class WarehouseEntryTest {
     }
 
     @Test
+    void addNegativeAmount() {
+        warehouseEntry.addAmount(10);
+        warehouseEntry.addAmount(-5);
+        assertEquals(5, warehouseEntry.getAmount());
+    }
+
+    @Test
+    void addNegativeAmountThrows() {
+        assertThrows(IllegalArgumentException.class, () -> warehouseEntry.addAmount(-5));
+    }
+
+    @Test
     void subtractAmount() {
         warehouseEntry.addAmount(10);
         warehouseEntry.subtractAmount(4);
         assertEquals(6, warehouseEntry.getAmount());
     }
+
+    @Test
+    void subtractNegativeAmount() {
+        warehouseEntry.subtractAmount(-10);
+        assertEquals(10, warehouseEntry.getAmount());
+    }
+
 
     @Test
     void subtractAmountNegativeThrows() {
