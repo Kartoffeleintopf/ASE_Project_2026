@@ -163,4 +163,27 @@ erfolgt ausschließlich ueber die Methoden von WarehouseEntry:
 Diese Methoden stellen sicher dass der Lagerbestand nie unter null sinken kann.
 
 ### Domain Service
-// TODO
+
+#### Produktionsservice (ProductionService)
+ProductionService ist als Domain Service implementiert, da die Produktionslogik nicht
+natuerlich zu einer einzelnen Entity gehoert.
+Sie benoetigt sowohl Recipe als auch WarehouseEntry und koordiniert deren Interaktion.
+
+Der Domain Service haelt keine Referenzen auf Repositories und ist damit unabhaengig von der Infrastruktur.
+Alle benoedigten Objekte werden vom Application Layer uebergeben:
+
+```
+public void produceRecipe(Recipe recipe, Map<Ingredient, WarehouseEntry> entries, int times) {
+    if (!isRecipeProducible(recipe, entries, times)) {
+        throw new IllegalArgumentException("Recipe is not producible");
+    }
+    recipe.getIngredientAmounts().forEach((ingredient, amount) ->
+            entries.get(ingredient).subtractAmount(amount * times));
+    entries.get(recipe.getProduce()).addAmount(times);
+}
+```
+
+Der Service stellt sicher dass:
+- Alle Zutaten ausreichend vorhanden sind bevor die Produktion beginnt (atomare Pruefung)
+- Die Lagerbestaende korrekt aktualisiert werden
+- Produktionsketten rekursiv traversiert werden koennen via getDirectIngredients() oder getBaseIngredients
