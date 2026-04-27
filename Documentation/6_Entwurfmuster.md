@@ -52,5 +52,3 @@ Dies ist funktional aequivalent, jedoch ist die Konstruktionslogik
 nicht von der Verwendung des Objekts getrennt und liegt direkt im Service.
 Der Builder macht die Konstruktionsabsicht expliziter und kapselt
 den Aufbauprozess in einer dedizierten Klasse.
-
-## TODO
