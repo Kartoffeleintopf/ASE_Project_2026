@@ -1,15 +1,15 @@
 # Domain Driven Design (DDD)
 ## Analyse der Ubiquitous Language
-Relevante Begriffe werden mit ihrer fachlichen Bedeutung, Aufgaben und Regeln dokumentiert
+Relevante Begriffe werden mit ihrer fachlichen Bedeutung, Aufgaben und Regeln dokumentiert.
 
 ### Zutat (Ingredient)
-Eine Zutat ist ein im System verwaltetes Object welches Eigenschaften besitzt wie bspw. Lagerbestand und welches in Rezepten verwendet werden kann.
-Auf der Domainebene kann die base Variable nicht geaendert werden, dies verhindert dass Service oder die Technical Ebene diese Invariante veraendern koennen
+Eine Zutat ist ein im System verwaltetes Object welches Eigenschaften besitzt wie bspw. der Name und welches in Rezepten verwendet werden kann.
+Auf der Domainebene kann die base Variable nicht geaendert werden, dies verhindert dass Service oder die Technical Ebene diese Invariante veraendern koennen.
 
 #### Eigenschaften
 - Name
 - Bild
-- Lagerbestand
+- Lagerbestand (wurde extrahiert in WarehouseEntry)
 
 #### Regeln
 - Kann eine Grundzutat sein oder eine durch ein Rezept herstellbare Zutat sein.
@@ -17,26 +17,24 @@ Auf der Domainebene kann die base Variable nicht geaendert werden, dies verhinde
 - Lagerbestand darf nicht kleiner als 0 sein (Lagerbestand >= 0)
 
 ### Grundzutat (BaseIngredient)
-Eine Grundzutat ist eine Zutat welche nicht durch ein Rezept erzeugt werden kann
+Eine Grundzutat ist eine Zutat welche nicht durch ein Rezept erzeugt werden kann.
 
 #### Eigenschaften
 - Name
 - Bild
-- Lagerbestand
 
 #### Regeln
-- Darf nicht das Resultat eines Rezept sein
+- Darf nicht das Resultat eines Rezeptes sein
 - Kann in einem Rezept fuer andere Zutaten verwendet werden.
 - Lagerbestand darf nicht kleiner als 0 sein (Lagerbestand >= 0)
 
-### Herstellbare Zutat ()
-Eine Herstellbare Zutat ist eine Zutat welche das Resultat eines Rezeptes ist.
+### Herstellbare Zutat (Producible Ingredient)
+Eine Herstellbare Zutat ist eine Zutat, welche das Resultat eines Rezeptes ist.
 
 #### Eigenschaften
 - Name
 - Bild
-- Lagerbestand
-- Rezept
+- Rezept (wurde wegen JSON backreference entfernt)
 
 #### Regeln
 - Muss das Resultat genau eines Rezeptes sein
@@ -55,7 +53,7 @@ Ein Rezept beschreibt die Kombination an Zutaten und Anweisungen die verwendet w
 - Erfordert Zielzutat und benoetigte Zutaten um gueltig zu sein
 
 ### Lager
-Das Lager enthaelt alle Zutaten jeder Art in den vorhandenen Mengen
+Das Lager enthaelt alle Zutaten jeder Art in den vorhandenen Mengen, anfangs standardmaessig immer genau null.
 
 #### Eigenschaften
 - Zutaten mit zugehoerigen Mengenangaben
@@ -66,10 +64,8 @@ Das Lager enthaelt alle Zutaten jeder Art in den vorhandenen Mengen
 
 ## API Endpunkte
 Die API Endpunkte fuer den WarehouseController welche sich mit der Modifikation der Zutatenmengen befassen,
-nutzen das WarehouseEntryDTO um die Mengen (amounts) zu verwalten.
-Dadurch befinden sich in den API Aufrufen nicht zwei Zahlen (IngredientID und Mengen/amount),
-sondern nur eine, Die IngredientID.
-Eine noch bessere Loesung ist es die IngredientID aus dem DTO zu entnehmen.
+nutzen das WarehouseEntryDTO um die Zutaten (Ingredient) und Mengen (amounts) zu verwalten.
+Beides wird aus dem DTO (Data Transfer Object) entnommen.
 
 ### Produzieren
 Beim API Endpunkte erstellen ist mir aufgefallen,
@@ -98,12 +94,14 @@ public boolean equals(Object o) {
 
 #### Rezept (Recipe)
 Recipe ist ebenfalls als Entitaet implementiert, 
-genau wie die Zutat besitzt auch jedes Rezeot eine id.
+genau wie die Zutat besitzt auch jedes Rezept eine id.
+Wie die Zutat auch wird die equals() Methode ueberschrieben.
 
 #### Lagereintrag (WarehouseEntry)
 Der Lagereintrag verwaltet die Anzahlen der vorhandenen Zutaten, 
 daher jede erstellte Zutat erhaelt auch einen Eintrag welcher initial immer die Anzahl 0 enthaelt.
 Der Lagereintrag ist ebenfalls eine Entitaet, mit eigener id.
+Wie Zutat und Rezept wird die equals() Methode ueberschrieben.
 
 ### Repositories
 Repositories abstrahieren den Zugriff auf die Datenbank 
@@ -111,12 +109,24 @@ und stellen eine Sammlung von Methoden bereit,
 zur Interaktion mit dieser.
 
 Neben den Standard CRUD-Operationen (CREATE, READ, UPDATE, DELETE), 
-koennen auch selbst Methoden definiert werden welche von JPA in die entsprechenden Datenbankzugriffe umgewnadelt werden.
+koennen auch selbst Methoden definiert werden welche von JPA in die entsprechenden Datenbankzugriffe umgewandelt werden.
 
 Es gibt die folgenden 3 Repositories:
 - IngredientRepository
 - RecipeRepository
 - WarehouseEntryRepository
+
+```
+public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
+    List<Ingredient> findByBase(boolean base);
+    List<Ingredient> findByNameContaining(String name);
+}
+```
+
+Beispiel zeigt IngredientRepository mit zwei selbst definierten Methoden.
+JPA wandelt dieser anhand der Schluesselwoerter zu:
+findByBase: select i from Ingredient i where i.base = :base
+findByNameContaining: select i from Ingredient i where i.name like concat('%', :name, '%')
 
 ### Value Objects
 
@@ -124,6 +134,18 @@ Es gibt die folgenden 3 Repositories:
 Bildlink ist ein Value Object, da der Bildlink keine eigene Identitaet benoetigt.
 Zwei Bildlink sind also identisch mit derselben url sind identisch, 
 unabhaengig davon zu welcher Zutat sie gehoeren.
+
+Demnach wurde die equals() Methode angepasst um diese Bedingung zu erfuellen:
+
+```
+@Override
+public boolean equals(Object o) {
+if (this == o) return true;
+if (!(o instanceof PictureLink)) return false;
+PictureLink other = (PictureLink) o;
+return this.url.equals(other.url);
+}
+```
 
 Da Bildlink ein Value Object ist, 
 also immutable ist gibt es entsprechend keine setUrl Methode.
@@ -160,7 +182,7 @@ erfolgt ausschließlich ueber die Methoden von WarehouseEntry:
 - subtractAmount(amount)
 - setAmount(amount)
 
-Diese Methoden stellen sicher dass der Lagerbestand nie unter null sinken kann.
+Diese Methoden stellen sicher, dass der Lagerbestand nie unter null sinken kann.
 
 ### Domain Service
 
@@ -170,7 +192,7 @@ natuerlich zu einer einzelnen Entity gehoert.
 Sie benoetigt sowohl Recipe als auch WarehouseEntry und koordiniert deren Interaktion.
 
 Der Domain Service haelt keine Referenzen auf Repositories und ist damit unabhaengig von der Infrastruktur.
-Alle benoedigten Objekte werden vom Application Layer uebergeben:
+Alle benoetigten Objekte werden vom Application Layer uebergeben:
 
 ```
 public void produceRecipe(Recipe recipe, Map<Ingredient, WarehouseEntry> entries, int times) {
