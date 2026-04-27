@@ -49,10 +49,9 @@ Eine Lager- & Rezeptverwaltung mit Produktionsfunktion und mehrstufigen Produkti
 ```
 ./run.sh
 ```
-due to the refactor work currently going on this doesn't work anymore
 
 ### Intented Order of Deletion
-1. Recipe (set produced Ingredients recipe to null)
+1. Recipe
 2. produced Ingredient (if wished for)
 3. proceed to Ingredient that where contained (if wished for)
 
