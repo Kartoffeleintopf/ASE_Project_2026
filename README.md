@@ -72,3 +72,6 @@ GRANT ALL PRIVILEGES ON ase_db.* TO 'allpowerful'@'localhost';
 FLUSH PRIVILEGES;
 ```
 ### Nutzerdetails in application.properties eintragen
+
+
+test
